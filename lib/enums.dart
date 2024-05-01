@@ -1,4 +1,4 @@
-enum ExerciseType { cardio, strength, calisthenics }
+enum ExerciseType { cardio, weightLifting, bodyWeight }
 
 enum Muscle {
   chest,

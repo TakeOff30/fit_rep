@@ -1,37 +1,50 @@
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/enums.dart';
+import 'package:fit_rep/models/exercise_set.dart';
 import 'package:uuid/uuid.dart';
 
 class Workout {
-  final String id;
+  final String id = const Uuid().v4();
   final String name;
-  final DateTime date;
-  final Map<Exercise, List<Set>> exercises;
+  final Map<Exercise, List<ExerciseSet>> exercises;
 
-  Workout({
-    required this.name,
-    required this.exercises,
-  }) : id = const Uuid().v4();
+  Workout(
+    this.name,
+    this.exercises,
+  );
 
   List<ExerciseType> exerciseTypes() {
     return exercises.keys.map((e) => e.type).toList();
   }
 }
 
-class PlannedWorkout extends Workout {
-  // passo il workout nel costruttore
-  PlannedWorkout({
-    required String name,
-    required Map<Exercise, List<Set>> exercises,
-  }) : super(name: name, exercises: exercises);
+class CompletedWorkout extends Workout {
+  final DateTime date;
+  final int burnedCalories;
+  final Duration duration;
+  @override
+  final String id = const Uuid().v4();
+
+  CompletedWorkout(workout, this.date, this.burnedCalories, this.duration)
+      : super(workout.name, workout.exercises);
+
+  double calculateCaloriesBurned(double userWeight) {
+    double totalCalories = 0;
+    exercises.forEach((exercise, sets) {
+      double exerciseCalories = 0;
+      for (var exeSet in sets) {
+        exerciseCalories += exeSet.countCalories(userWeight);
+      }
+      totalCalories += exerciseCalories;
+    });
+    return totalCalories;
+  }
 }
 
-class CompletedWorkout extends Workout {
-  final DateTime completedDate;
+class PlannedWorkout extends Workout {
+  @override
+  final String id = const Uuid().v4();
+  final DateTime date;
 
-  CompletedWorkout({
-    required String name,
-    required Map<Exercise, List<Set>> exercises,
-    required this.completedDate,
-  }) : super(name: name, exercises: exercises);
+  PlannedWorkout(workout, this.date) : super(workout.name, workout.exercises);
 }
