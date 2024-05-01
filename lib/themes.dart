@@ -8,6 +8,7 @@ class FitRepTheme {
   static ThemeData light() {
     return ThemeData(
       primaryColor: primaryColor,
+      primaryColorLight: lightColor,
       scaffoldBackgroundColor: lightColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: lightColor,
@@ -16,12 +17,14 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         displayLarge: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         displayMedium: TextStyle(
           fontSize: 18,
+          fontFamily: 'Roboto',
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
@@ -37,6 +40,7 @@ class FitRepTheme {
   static ThemeData dark() {
     return ThemeData(
       primaryColor: primaryColor,
+      primaryColorDark: darkColor,
       scaffoldBackgroundColor: darkColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: darkColor,

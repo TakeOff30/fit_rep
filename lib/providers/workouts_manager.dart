@@ -23,4 +23,16 @@ class WorkoutsManager extends ChangeNotifier {
     _workouts[index] = workout;
     notifyListeners();
   }
+
+  List<Workout> getTodayWorkouts() {
+    final now = DateTime.now();
+    return _workouts.where((w) {
+      if (w is PlannedWorkout) {
+        return w.date.year == now.year &&
+            w.date.month == now.month &&
+            w.date.day == now.day;
+      }
+      return false;
+    }).toList();
+  }
 }

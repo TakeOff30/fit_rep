@@ -50,10 +50,11 @@ class _FitRepAppState extends State<FitRepApp> {
             title: 'Fit Rep',
             theme: _settingsManager.theme,
             home: Scaffold(
-              body: IndexedStack(
+              body: SafeArea(
+                  child: IndexedStack(
                 index: _selectedIndex,
                 children: destinations,
-              ),
+              )),
               bottomNavigationBar: Container(
                 decoration: const BoxDecoration(
                   border: Border(
