@@ -33,7 +33,17 @@ class CompletedWorkout extends Workout {
     exercises.forEach((exercise, sets) {
       double exerciseCalories = 0;
       for (var exeSet in sets) {
-        exerciseCalories += exeSet.countCalories(userWeight);
+        if (exeSet.isTimed) {
+          exerciseCalories +=
+              exercise.metValue * exeSet.executionTime * 3.5 * userWeight;
+        } else {
+          exerciseCalories += 0.025 *
+              exeSet.weight *
+              exeSet.reps *
+              exercise.metValue *
+              3.5 *
+              userWeight;
+        }
       }
       totalCalories += exerciseCalories;
     });
