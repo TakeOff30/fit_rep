@@ -1,12 +1,12 @@
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/enums.dart';
+import 'package:fit_rep/models/exercise_set.dart';
 import 'package:uuid/uuid.dart';
 
 class Workout {
   final String id;
   final String name;
-  final DateTime date;
-  final Map<Exercise, List<Set>> exercises;
+  final Map<Exercise, List<ExerciseSet>> exercises;
 
   Workout({
     required this.name,
@@ -19,11 +19,12 @@ class Workout {
 }
 
 class PlannedWorkout extends Workout {
-  // passo il workout nel costruttore
+  DateTime plannedDate;
+
   PlannedWorkout({
-    required String name,
-    required Map<Exercise, List<Set>> exercises,
-  }) : super(name: name, exercises: exercises);
+    required Workout workout,
+    required this.plannedDate,
+  }) : super(name: workout.name, exercises: workout.exercises);
 }
 
 class CompletedWorkout extends Workout {
@@ -31,7 +32,7 @@ class CompletedWorkout extends Workout {
 
   CompletedWorkout({
     required String name,
-    required Map<Exercise, List<Set>> exercises,
+    required Map<Exercise, List<ExerciseSet>> exercises,
     required this.completedDate,
   }) : super(name: name, exercises: exercises);
 }

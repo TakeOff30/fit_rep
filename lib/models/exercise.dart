@@ -6,13 +6,13 @@ class Exercise {
   final String description;
   final ExerciseType type;
   final Muscle primaryMuscle;
-  final Muscle secondaryMuscles;
+  final Muscle secondaryMuscle;
 
   Exercise({
     required this.name,
     required this.description,
     required this.type,
     required this.primaryMuscle,
-    required this.secondaryMuscles,
+    required this.secondaryMuscle,
   });
 }
