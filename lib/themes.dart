@@ -9,11 +9,20 @@ class FitRepTheme {
     return ThemeData(
       primaryColor: primaryColor,
       primaryColorLight: lightColor,
+      primaryColorDark: darkColor,
       scaffoldBackgroundColor: lightColor,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: primaryColor, style: BorderStyle.solid, width: 3),
+        ),
+        hintStyle: TextStyle(color: darkColor),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorShape: CircleBorder(),
         backgroundColor: lightColor,
-        selectedItemColor: primaryColor,
-        unselectedItemColor: darkColor,
+        iconTheme: MaterialStateProperty.all(IconThemeData(color: darkColor)),
+        indicatorColor: Colors.transparent,
       ),
       textTheme: TextTheme(
         displayLarge: TextStyle(
@@ -40,12 +49,21 @@ class FitRepTheme {
   static ThemeData dark() {
     return ThemeData(
       primaryColor: primaryColor,
+      primaryColorLight: lightColor,
       primaryColorDark: darkColor,
       scaffoldBackgroundColor: darkColor,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      inputDecorationTheme: InputDecorationTheme(
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+              color: primaryColor, style: BorderStyle.solid, width: 3),
+        ),
+        hintStyle: TextStyle(color: lightColor),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorShape: CircleBorder(),
         backgroundColor: darkColor,
-        selectedItemColor: primaryColor,
-        unselectedItemColor: lightColor,
+        iconTheme: MaterialStateProperty.all(IconThemeData(color: lightColor)),
+        indicatorColor: Colors.transparent,
       ),
       textTheme: TextTheme(
         displayLarge: TextStyle(

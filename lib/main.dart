@@ -55,39 +55,41 @@ class _FitRepAppState extends State<FitRepApp> {
                 index: _selectedIndex,
                 children: destinations,
               )),
-              bottomNavigationBar: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey,
-                      width: 1.0,
-                    ),
+              bottomNavigationBar: NavigationBar(
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                onDestinationSelected: _onItemTapped,
+                selectedIndex: _selectedIndex,
+                indicatorShape: CircleBorder(),
+                destinations: <NavigationDestination>[
+                  NavigationDestination(
+                    icon: _selectedIndex == 0
+                        ? Icon(Icons.fitness_center,
+                            color: settingsManger.theme.primaryColor)
+                        : Icon(Icons.fitness_center),
+                    label: 'Create Workout',
                   ),
-                ),
-                child: BottomNavigationBar(
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  onTap: _onItemTapped,
-                  currentIndex: _selectedIndex,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.fitness_center),
-                      label: 'Create Workout',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.calendar_month),
-                      label: 'Calendar',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.settings),
-                      label: 'Settings',
-                    ),
-                  ],
-                ),
+                  NavigationDestination(
+                    icon: _selectedIndex == 1
+                        ? Icon(Icons.home,
+                            color: settingsManger.theme.primaryColor)
+                        : Icon(Icons.home),
+                    label: 'Home',
+                  ),
+                  NavigationDestination(
+                    icon: _selectedIndex == 2
+                        ? Icon(Icons.calendar_month,
+                            color: settingsManger.theme.primaryColor)
+                        : Icon(Icons.calendar_month),
+                    label: 'Calendar',
+                  ),
+                  NavigationDestination(
+                    icon: _selectedIndex == 3
+                        ? Icon(Icons.settings,
+                            color: settingsManger.theme.primaryColor)
+                        : Icon(Icons.settings),
+                    label: 'Settings',
+                  ),
+                ],
               ),
             ),
           );

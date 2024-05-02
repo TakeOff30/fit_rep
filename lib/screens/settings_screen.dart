@@ -12,74 +12,96 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingsManager>(context);
 
-    return Column(
-      children: <Widget>[
-        Text('Settings', style: Theme.of(context).textTheme.displayLarge),
-        const SizedBox(height: 16),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text('Dark Mode',
-                  style: Theme.of(context).textTheme.displayMedium),
-              Switch(
-                value: context.watch<SettingsManager>().isDarkMode,
-                onChanged: (value) {
-                  context.read<SettingsManager>().toggleDarkMode();
-                  print(context.read<SettingsManager>().isDarkMode);
-                },
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text('Notifications',
-                  style: Theme.of(context).textTheme.displayMedium),
-              Switch(
-                value: settingsProvider.isNotificationEnabled,
-                onChanged: (value) {
-                  settingsProvider.toggleNotification();
-                },
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text('Weight', style: Theme.of(context).textTheme.displayMedium),
-              Expanded(
-                  child: TextField(
-                decoration: const InputDecoration(
-                  hintText: '70',
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Text('Settings', style: Theme.of(context).textTheme.displayLarge),
+          const SizedBox(height: 16),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Dark Mode',
+                    style: Theme.of(context).textTheme.displayMedium),
+                Switch(
+                  activeColor: Theme.of(context).primaryColor,
+                  value: context.watch<SettingsManager>().isDarkMode,
+                  onChanged: (value) {
+                    context.read<SettingsManager>().toggleDarkMode();
+                    print(context.read<SettingsManager>().isDarkMode);
+                  },
                 ),
-                onChanged: (value) =>
-                    settingsProvider.setWeight(int.parse(value)),
-              ))
-            ],
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Text('Height', style: Theme.of(context).textTheme.displayMedium),
-              Expanded(
-                  child: TextField(
-                decoration: const InputDecoration(
-                  hintText: '180',
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Notifications',
+                    style: Theme.of(context).textTheme.displayMedium),
+                Switch(
+                  activeColor: Theme.of(context).primaryColor,
+                  value: settingsProvider.isNotificationEnabled,
+                  onChanged: (value) {
+                    settingsProvider.toggleNotification();
+                  },
                 ),
-                onChanged: (value) =>
-                    settingsProvider.setHeight(int.parse(value)),
-              ))
-            ],
+              ],
+            ),
           ),
-        )
-      ],
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text('Height',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayMedium),
+                TextField(
+                  textAlign: TextAlign.right,
+                  maxLength: 3,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      constraints: BoxConstraints(maxWidth: 80),
+                      hintText: '180',
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  onChanged: (value) =>
+                      settingsProvider.setHeight(int.parse(value)),
+                ),
+                Text('cm',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayMedium),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text('Weight',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayMedium),
+                TextField(
+                  textAlign: TextAlign.right,
+                  maxLength: 3,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      constraints: BoxConstraints(maxWidth: 80),
+                      hintText: '70',
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  onChanged: (value) =>
+                      settingsProvider.setWeight(int.parse(value)),
+                ),
+                Text('kg',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displayMedium),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
