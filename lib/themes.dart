@@ -11,12 +11,19 @@ class FitRepTheme {
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
       scaffoldBackgroundColor: lightColor,
+      buttonTheme: ButtonThemeData(
+        buttonColor: lightColor,
+      ),
+      iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(iconColor: MaterialStateProperty.all(darkColor))),
+      iconTheme: IconThemeData(color: darkColor),
       inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
               color: primaryColor, style: BorderStyle.solid, width: 3),
         ),
         hintStyle: TextStyle(color: darkColor),
+        labelStyle: TextStyle(color: darkColor),
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorShape: CircleBorder(),
@@ -25,19 +32,19 @@ class FitRepTheme {
         indicatorColor: Colors.transparent,
       ),
       textTheme: TextTheme(
-        displayLarge: TextStyle(
+        headlineLarge: TextStyle(
           fontFamily: 'Roboto',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
-        displayMedium: TextStyle(
+        headlineMedium: TextStyle(
           fontSize: 18,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
-        displaySmall: TextStyle(
+        headlineSmall: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: darkColor,
@@ -52,12 +59,19 @@ class FitRepTheme {
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
       scaffoldBackgroundColor: darkColor,
+      buttonTheme: ButtonThemeData(
+        buttonColor: darkColor,
+      ),
+      iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(iconColor: MaterialStateProperty.all(lightColor))),
+      iconTheme: IconThemeData(color: lightColor),
       inputDecorationTheme: InputDecorationTheme(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(
               color: primaryColor, style: BorderStyle.solid, width: 3),
         ),
         hintStyle: TextStyle(color: lightColor),
+        labelStyle: TextStyle(color: lightColor),
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorShape: CircleBorder(),
@@ -66,19 +80,31 @@ class FitRepTheme {
         indicatorColor: Colors.transparent,
       ),
       textTheme: TextTheme(
-        displayLarge: TextStyle(
+        headlineLarge: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
-        displayMedium: TextStyle(
+        headlineMedium: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: lightColor,
+        ),
+        headlineSmall: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
-        displaySmall: TextStyle(
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          color: lightColor,
+        ),
+        bodyMedium: TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.bold,
+          color: lightColor,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
           color: lightColor,
         ),
       ),

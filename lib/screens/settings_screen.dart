@@ -17,14 +17,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Text('Settings', style: Theme.of(context).textTheme.displayLarge),
+          Text('Settings', style: Theme.of(context).textTheme.headlineLarge),
           const SizedBox(height: 16),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Dark Mode',
-                    style: Theme.of(context).textTheme.displayMedium),
+                Text('Dark Mode', style: Theme.of(context).textTheme.bodyLarge),
                 Switch(
                   activeColor: Theme.of(context).primaryColor,
                   value: context.watch<SettingsManager>().isDarkMode,
@@ -41,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text('Notifications',
-                    style: Theme.of(context).textTheme.displayMedium),
+                    style: Theme.of(context).textTheme.bodyLarge),
                 Switch(
                   activeColor: Theme.of(context).primaryColor,
                   value: settingsProvider.isNotificationEnabled,
@@ -58,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: <Widget>[
                 Text('Height',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium),
+                    style: Theme.of(context).textTheme.bodyLarge),
                 TextField(
                   textAlign: TextAlign.right,
                   maxLength: 3,
@@ -72,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Text('cm',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium),
+                    style: Theme.of(context).textTheme.bodyLarge),
               ],
             ),
           ),
@@ -82,7 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: <Widget>[
                 Text('Weight',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium),
+                    style: Theme.of(context).textTheme.bodyLarge),
                 TextField(
                   textAlign: TextAlign.right,
                   maxLength: 3,
@@ -96,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Text('kg',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium),
+                    style: Theme.of(context).textTheme.bodyLarge),
               ],
             ),
           )

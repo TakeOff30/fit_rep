@@ -13,22 +13,11 @@ class Workout {
     this.exercises,
   );
 
-  List<ExerciseType> exerciseTypes() {
-    return exercises.keys.map((e) => e.type).toList();
+  List<String> exerciseTypes() {
+    return exercises.keys.map((e) => e.type.name.toLowerCase()).toList();
   }
-}
 
-class CompletedWorkout extends Workout {
-  final DateTime date;
-  final int burnedCalories;
-  final Duration duration;
-  @override
-  final String id = const Uuid().v4();
-
-  CompletedWorkout(workout, this.date, this.burnedCalories, this.duration)
-      : super(workout.name, workout.exercises);
-
-  double calculateCaloriesBurned(double userWeight) {
+  double calculateCaloriesBurned(int userWeight) {
     double totalCalories = 0;
     exercises.forEach((exercise, sets) {
       double exerciseCalories = 0;
@@ -49,6 +38,33 @@ class CompletedWorkout extends Workout {
     });
     return totalCalories;
   }
+
+  int calculateXP() {
+    int totalXP = 0;
+    exercises.forEach((exercise, sets) {
+      int exerciseXP = 0;
+      for (var exeSet in sets) {
+        if (exeSet.isTimed) {
+          exerciseXP += exeSet.executionTime;
+        } else {
+          exerciseXP += exeSet.reps * 5;
+        }
+      }
+      totalXP += exerciseXP;
+    });
+    return totalXP;
+  }
+}
+
+class CompletedWorkout extends Workout {
+  final DateTime date;
+  final int burnedCalories;
+  final Duration duration;
+  @override
+  final String id = const Uuid().v4();
+
+  CompletedWorkout(workout, this.date, this.burnedCalories, this.duration)
+      : super(workout.name, workout.exercises);
 }
 
 class PlannedWorkout extends Workout {
