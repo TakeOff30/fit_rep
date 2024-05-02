@@ -36,7 +36,7 @@ class MyGymScreenState extends State<MyGymScreen> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    isTodayWorkout = !isTodayWorkout;
+                    isTodayWorkout = true;
                     toShow = workoutsProvider.getTodayWorkouts();
                   });
                 },
@@ -60,7 +60,7 @@ class MyGymScreenState extends State<MyGymScreen> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    isTodayWorkout = !isTodayWorkout;
+                    isTodayWorkout = false;
                     toShow = workoutsProvider.workouts;
                   });
                 },
