@@ -1,5 +1,7 @@
 import 'package:fit_rep/components/filter_card.dart';
+import 'package:fit_rep/components/workout_card.dart';
 import 'package:fit_rep/models/workout.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,8 @@ class MyGymScreenState extends State<MyGymScreen> {
   @override
   Widget build(BuildContext context) {
     var workoutsProvider = Provider.of<WorkoutsManager>(context);
+    var settingsProvider = Provider.of<SettingsManager>(context);
+    toShow = workoutsProvider.workouts;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -26,8 +30,8 @@ class MyGymScreenState extends State<MyGymScreen> {
         children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
-            child:
-                Text('My Gym', style: Theme.of(context).textTheme.displayLarge),
+            child: Text('My Gym',
+                style: Theme.of(context).textTheme.headlineLarge),
           ),
           const SizedBox(height: 16),
           Row(
@@ -44,16 +48,22 @@ class MyGymScreenState extends State<MyGymScreen> {
                   backgroundColor: MaterialStateProperty.all<Color>(
                     isTodayWorkout
                         ? Theme.of(context).primaryColor
-                        : Theme.of(context).primaryColorLight,
+                        : settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColorLight,
                   ),
                   side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(color: Colors.black, width: 2),
+                    BorderSide(
+                        width: 1,
+                        color: settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColorDark),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Today\'s Workout',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: settingsProvider.theme.textTheme.bodyLarge!.color,
                   ),
                 ),
               ),
@@ -68,16 +78,22 @@ class MyGymScreenState extends State<MyGymScreen> {
                   backgroundColor: MaterialStateProperty.all<Color>(
                     !isTodayWorkout
                         ? Theme.of(context).primaryColor
-                        : Theme.of(context).primaryColorLight,
+                        : settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColorLight,
                   ),
                   side: MaterialStateProperty.all<BorderSide>(
-                    const BorderSide(color: Colors.black, width: 2),
+                    BorderSide(
+                        color: settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColorDark,
+                        width: 1),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Created workouts',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: settingsProvider.theme.textTheme.bodyLarge!.color,
                   ),
                 ),
               ),
@@ -87,21 +103,7 @@ class MyGymScreenState extends State<MyGymScreen> {
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
-                Container(
-                  height: 50,
-                  color: Colors.amber[600],
-                  child: const Center(child: Text('Entry A')),
-                ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[500],
-                  child: const Center(child: Text('Entry B')),
-                ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[100],
-                  child: const Center(child: Text('Entry C')),
-                ),
+                for (var workout in toShow) WorkoutCard(workout: workout)
               ],
             ),
           ),

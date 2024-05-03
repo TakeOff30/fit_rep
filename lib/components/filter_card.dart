@@ -12,7 +12,7 @@ class _FilterCardState extends State<FilterCard> {
         child: Column(
       children: <Widget>[
         Text('Filter Workouts',
-            style: Theme.of(context).textTheme.displayMedium),
+            style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 16),
         Expanded(
           child: Row(
