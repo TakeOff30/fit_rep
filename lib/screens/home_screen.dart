@@ -68,85 +68,104 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 80),
             _buildIconRow(),
             if (_selectedIcon ==
-              3) // Display bar chart if "Weekly kcal" is selected
+                3) // Display bar chart if "Weekly kcal" is selected
               Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: BarChart(
-                BarChartData(
-                  barGroups: [
-                  BarChartGroupData(x: 0, barRods: [
-                    BarChartRodData(
-                      toY: 12, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 1, barRods: [
-                    BarChartRodData(
-                      toY: 16, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 2, barRods: [
-                    BarChartRodData(
-                      toY: 0, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 3, barRods: [
-                    BarChartRodData(
-                      toY: 18, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 4, barRods: [
-                    BarChartRodData(
-                      toY: 20, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 5, barRods: [
-                    BarChartRodData(
-                      toY: 0, color: Colors.lightBlue, width: 16)
-                  ]),
-                  BarChartGroupData(x: 6, barRods: [
-                    BarChartRodData(
-                      toY: 14, color: Colors.lightBlue, width: 16)
-                  ]),
-                  ],
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(show: false),
-                  titlesData: FlTitlesData(
-                  show: true,
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 40,
-                    getTitlesWidget: (value, meta) {
-                      final titles = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-                      return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(titles[value.toInt() % titles.length],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14)),
-                      );
-                    },
-                    interval: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  child: BarChart(
+                    BarChartData(
+                      barGroups: [
+                        BarChartGroupData(x: 0, barRods: [
+                          BarChartRodData(
+                              toY: 12, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 1, barRods: [
+                          BarChartRodData(
+                              toY: 16, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 2, barRods: [
+                          BarChartRodData(
+                              toY: 0, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 3, barRods: [
+                          BarChartRodData(
+                              toY: 18, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 4, barRods: [
+                          BarChartRodData(
+                              toY: 20, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 5, barRods: [
+                          BarChartRodData(
+                              toY: 0, color: Colors.lightBlue, width: 16)
+                        ]),
+                        BarChartGroupData(x: 6, barRods: [
+                          BarChartRodData(
+                              toY: 14, color: Colors.lightBlue, width: 16)
+                        ]),
+                      ],
+                      gridData: FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
+                      titlesData: FlTitlesData(
+                        show: true,
+                        topTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        rightTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 40,
+                            getTitlesWidget: (value, meta) {
+                              final titles = [
+                                'M',
+                                'T',
+                                'W',
+                                'T',
+                                'F',
+                                'S',
+                                'S'
+                              ];
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Text(
+                                    titles[value.toInt() % titles.length],
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14)),
+                              );
+                            },
+                            interval: 1,
+                          ),
+                        ),
+                      ),
+
+                      groupsSpace:
+                          35, // Space Between the groups of bars (default: 16)
+                      alignment: BarChartAlignment
+                          .center, // Alignment of the bars in the group
+                      barTouchData: BarTouchData(
+                        enabled: true,
+                        touchTooltipData: BarTouchTooltipData(
+                          getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                            return BarTooltipItem(
+                              rod.toY.toString() + ' kcal',
+                              TextStyle(color: Colors.white),
+                            );
+                          },
+                          getTooltipColor: (_) => Colors.blueGrey,
+                          tooltipBorder: BorderSide(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
-                  ),
-                  groupsSpace:
-                    30, // Aumentato lo spazio tra i gruppi di barre
-                  alignment: BarChartAlignment
-                    .center, // Modificato per utilizzare l'allineamento che permette l'uso di groupsSpace
-                  barTouchData: BarTouchData(
-                  enabled: true,
-                  touchTooltipData: BarTouchTooltipData(
-                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                    return BarTooltipItem(
-                      rod.toY.toString() + ' kcal',
-                      TextStyle(color: Colors.white),
-                    );
-                    },
-                    getTooltipColor: (_) => Colors.blueGrey,
-                    tooltipBorder: BorderSide(color: Colors.white),
-                  ),
-                  ),
                 ),
-                ),
-              ),
               ),
           ],
         ),
