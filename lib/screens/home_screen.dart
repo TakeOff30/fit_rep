@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               TextStyle(color: Colors.white),
                             );
                           },
-                          getTooltipColor: (_) => Colors.blueGrey,
+                          tooltipBgColor: Colors.blueGrey,
                           tooltipBorder: BorderSide(color: Colors.white),
                         ),
                       ),
