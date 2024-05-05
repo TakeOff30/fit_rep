@@ -1,4 +1,5 @@
 import 'package:fit_rep/enums.dart';
+import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/foundation.dart';
 
 class StatisticsManager extends ChangeNotifier {
@@ -26,12 +27,26 @@ class StatisticsManager extends ChangeNotifier {
     Muscle.abs: 0,
   };
 
+  int userLevel = 1;
+  int totalXPToLevelUp = 0;
+  int currentXP = 0;
+
   Map<String, int> get weeklyCalories => _weeklyCalories;
 
   Map<Muscle, double> get trainedMuscles => _trainedMuscles;
 
   void updateCalories(String day, int value) {
     _weeklyCalories[day] = (_weeklyCalories[day] ?? 0) + value;
+    notifyListeners();
+  }
+
+  void updateXP(int value) {
+    totalXPToLevelUp = 100 * userLevel;
+    currentXP += value;
+    if (currentXP >= totalXPToLevelUp) {
+      userLevel++;
+      currentXP = currentXP - totalXPToLevelUp;
+    }
     notifyListeners();
   }
 
