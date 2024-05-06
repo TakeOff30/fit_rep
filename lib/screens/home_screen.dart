@@ -6,8 +6,23 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+// Gradient color for the bars in the bar chart
+class AppColors {
+  static Color primaryColor = Color(0xFF39FF14); // Green color
+}
+
+LinearGradient get _barsGradient => LinearGradient(
+      colors: [
+        AppColors.primaryColor.withOpacity(1.0),
+        AppColors.primaryColor.withOpacity(0.4)
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
+
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIcon = 3; // Default selection for "Weekly kcal"
+  int? selectedBarIndex; // Variable to keep track of the selected bar
 
   @override
   Widget build(BuildContext context) {
@@ -67,43 +82,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 80),
             _buildIconRow(),
+            const SizedBox(height: 80),
             if (_selectedIcon ==
                 3) // Display bar chart if "Weekly kcal" is selected
-              Expanded(
+              SizedBox(
+                height: 200,
+                width: 400,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: BarChart(
                     BarChartData(
-                      barGroups: [
-                        BarChartGroupData(x: 0, barRods: [
-                          BarChartRodData(
-                              toY: 12, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 1, barRods: [
-                          BarChartRodData(
-                              toY: 16, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 2, barRods: [
-                          BarChartRodData(
-                              toY: 0, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 3, barRods: [
-                          BarChartRodData(
-                              toY: 18, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 4, barRods: [
-                          BarChartRodData(
-                              toY: 20, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 5, barRods: [
-                          BarChartRodData(
-                              toY: 0, color: Colors.lightBlue, width: 16)
-                        ]),
-                        BarChartGroupData(x: 6, barRods: [
-                          BarChartRodData(
-                              toY: 14, color: Colors.lightBlue, width: 16)
-                        ]),
-                      ],
+                      // Barchart configuration
+                      barGroups: getBarGroups(),
                       gridData: FlGridData(show: false),
                       borderData: FlBorderData(show: false),
                       titlesData: FlTitlesData(
@@ -134,24 +124,33 @@ class _HomeScreenState extends State<HomeScreen> {
                               return Padding(
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Text(
-                                    titles[value.toInt() % titles.length],
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14)),
+                                  titles[value.toInt() % titles.length],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                    fontSize: 14,
+                                  ),
+                                ),
                               );
                             },
                             interval: 1,
                           ),
                         ),
                       ),
-
-                      groupsSpace:
-                          35, // Space Between the groups of bars (default: 16)
-                      alignment: BarChartAlignment
-                          .center, // Alignment of the bars in the group
+                      groupsSpace: 35,
+                      alignment: BarChartAlignment.center,
                       barTouchData: BarTouchData(
                         enabled: true,
+                        touchCallback:
+                            (FlTouchEvent event, BarTouchResponse? response) {
+                          if (event is FlTapUpEvent && response != null) {
+                            setState(() {
+                              selectedBarIndex =
+                                  response.spot!.touchedBarGroupIndex;
+                            });
+                          }
+                        },
                         touchTooltipData: BarTouchTooltipData(
                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
                             return BarTooltipItem(
@@ -159,8 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               TextStyle(color: Colors.white),
                             );
                           },
-                          getTooltipColor: (_) => Colors.blueGrey,
-                          tooltipBorder: BorderSide(color: Colors.white),
+                          getTooltipColor: (group) => Colors.transparent,
+                          tooltipBorder: BorderSide(color: Colors.transparent),
                         ),
                       ),
                     ),
@@ -172,6 +171,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  List<BarChartGroupData> getBarGroups() => List.generate(7, (index) {
+        return BarChartGroupData(
+          x: index,
+          barRods: [
+            BarChartRodData(
+                toY: [0.0, 200.0, 0.0, 500.0, 350.0, 0.0, 0.0][index],
+                gradient: selectedBarIndex == index ? _barsGradient : null,
+                color: selectedBarIndex == index
+                    ? Colors.transparent
+                    : Color(0xFFC0C0C0),
+                width: 16)
+          ],
+        );
+      });
 
   Widget _buildIconRow() {
     return Row(
