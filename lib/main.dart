@@ -1,4 +1,5 @@
 import 'package:fit_rep/providers/settings_manager.dart';
+import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/home_screen.dart';
 import 'package:fit_rep/screens/my_gym_screen.dart';
@@ -22,6 +23,7 @@ class FitRepApp extends StatefulWidget {
 class _FitRepAppState extends State<FitRepApp> {
   final WorkoutsManager _workoutsManager = WorkoutsManager();
   final SettingsManager _settingsManager = SettingsManager();
+  final StatisticsManager _statisticsManager = StatisticsManager();
 
   int _selectedIndex = 0;
   final List<Widget> destinations = <Widget>[
@@ -43,6 +45,7 @@ class _FitRepAppState extends State<FitRepApp> {
         providers: [
           ChangeNotifierProvider(create: (context) => _workoutsManager),
           ChangeNotifierProvider(create: (context) => _settingsManager),
+          ChangeNotifierProvider(create: (context) => _statisticsManager),
         ],
         child: Consumer<SettingsManager>(
             builder: (context, settingsManger, child) {
