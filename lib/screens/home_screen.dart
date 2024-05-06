@@ -75,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 80),
             _buildIconRow(),
             const SizedBox(height: 80),
-            if (_selectedIcon ==
-                3) // Display bar chart if "Weekly kcal" is selected
+            if (_selectedIcon == 3)
+              // Display bar chart if "Weekly kcal" is selected
               WeeklyKcalChart(
                 selectedBarIndex: selectedBarIndex ?? 0,
                 onBarTap: (int index) {
@@ -85,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-            if (_selectedIcon ==
-                2) // Display muscles names if "Muscles" is selected
+            if (_selectedIcon == 2)
+              // Display muscles names if "Muscles" is selected
               Column(
                 children: _muscles
                     .map((String muscle) => Column(
@@ -105,8 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ))
                     .toList(),
               ),
-            if (_selectedIcon ==
-                1) // Display Level bar if "Level" icon is selected
+            if (_selectedIcon == 1)
+              // Display Level bar if "Level" icon is selected
               XPGradientProgressBar(
                 level: 1,
                 currentXP: 100,
