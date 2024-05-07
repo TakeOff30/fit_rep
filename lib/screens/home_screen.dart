@@ -1,6 +1,9 @@
+import 'package:fit_rep/providers/settings_manager.dart';
+import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_rep/components/weekly_kcal_bar_charth.dart';
 import 'package:fit_rep/components/level_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _statisticsProvider = Provider.of<StatisticsManager>(context);
     return Scaffold(
       backgroundColor: const Color(0xFF1E1E1E),
       body: Container(
@@ -33,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 50),
             Center(
-              child: Container( // Container for the statistics
+              child: Container(
+                // Container for the statistics
                 width: 300,
                 height: 260,
                 decoration: BoxDecoration(
@@ -70,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 80),
             _buildIconRow(),
             const SizedBox(height: 80),
-            if (_selectedIcon == 3) // Display bar chart if "Weekly kcal" is selected
+            if (_selectedIcon == 3)
+              // Display bar chart if "Weekly kcal" is selected
               WeeklyKcalChart(
                 selectedBarIndex: selectedBarIndex ?? 0,
                 onBarTap: (int index) {
@@ -79,26 +85,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
               ),
-            if (_selectedIcon == 2) // Display muscles names if "Muscles" is selected
+            if (_selectedIcon == 2)
+              // Display muscles names if "Muscles" is selected
               Column(
-              children: _muscles
-                .map((String muscle) => Column(
-                    children: [
-                    Text(
-                      muscle,
-                      style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
-                      ),
-                    ),
-                    SizedBox(height: 45), // Add vertical space
-                    ],
-                  ))
-                .toList(),
+                children: _muscles
+                    .map((String muscle) => Column(
+                          children: [
+                            Text(
+                              muscle,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                            SizedBox(height: 45), // Add vertical space
+                          ],
+                        ))
+                    .toList(),
               ),
-            if (_selectedIcon == 1) // Display Level bar if "Level" icon is selected
+            if (_selectedIcon == 1)
+              // Display Level bar if "Level" icon is selected
               XPGradientProgressBar(
                 level: 1,
                 currentXP: 100,
