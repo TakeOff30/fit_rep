@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-Color primaryColor = Color.fromARGB(255, 9, 237, 17);
-Color darkColor = Color(0xFF1E1E1E);
-Color lightColor = Color.fromARGB(255, 241, 244, 240);
+Color primaryColor = Color.fromARGB(255, 80, 200, 120);
+Color darkColor = Color.fromARGB(255, 30, 30, 30);
+Color lightColor = Color.fromARGB(255, 246, 246, 246);
 
 class FitRepTheme {
   static ThemeData light() {

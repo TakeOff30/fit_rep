@@ -82,23 +82,13 @@ class WorkoutCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          //Navigator.of(context).pushNamed('/workout',
-                          //    arguments: {'workout': workout});
-                        },
-                        icon: Icon(Icons.play_arrow,
-                            color: Color(0xFF39FF14), size: 32)),
-                    IconButton(
-                        onPressed: () {
-                          //Navigator.of(context).pushNamed('/calendar');
-                        },
-                        icon: Icon(Icons.calendar_today, size: 32)),
-                  ],
-                ),
+                IconButton(
+                    onPressed: () {
+                      //Navigator.of(context).pushNamed('/workout_preview',
+                      //    arguments: {'workout': workout});
+                    },
+                    icon: Icon(Icons.arrow_forward_ios_rounded,
+                        color: Color.fromARGB(255, 192, 192, 192), size: 32)),
               ],
             ),
           ),

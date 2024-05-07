@@ -15,13 +15,14 @@ class MyGymScreen extends StatefulWidget {
 
 class MyGymScreenState extends State<MyGymScreen> {
   bool isTodayWorkout = false;
-  List<Workout> toShow = [];
+  Filter filters = Filter('', [], '', []);
 
   @override
   Widget build(BuildContext context) {
     var workoutsProvider = Provider.of<WorkoutsManager>(context);
     var settingsProvider = Provider.of<SettingsManager>(context);
-    toShow = workoutsProvider.workouts;
+    List<Workout> toShow = workoutsProvider.workouts;
+    List<Workout> filteredWorkouts = filters.filterWorkouts(toShow);
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -99,11 +100,22 @@ class MyGymScreenState extends State<MyGymScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 16),
+          FilterCard(
+            filters,
+            (newFilter) {
+              setState(() {
+                filters = newFilter;
+                filteredWorkouts = filters.filterWorkouts(toShow);
+              });
+            },
+          ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8),
               children: <Widget>[
-                for (var workout in toShow) WorkoutCard(workout: workout)
+                for (var workout in filteredWorkouts)
+                  WorkoutCard(workout: workout)
               ],
             ),
           ),

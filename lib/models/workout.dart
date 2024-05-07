@@ -17,6 +17,15 @@ class Workout {
     return exercises.keys.map((e) => e.type.name.toLowerCase()).toList();
   }
 
+  List<String> muscles() {
+    List<String> muscles = [];
+    muscles
+        .addAll(exercises.keys.map((e) => e.primaryMuscle.name.toLowerCase()));
+    muscles.addAll(
+        exercises.keys.map((e) => e.secondaryMuscle.name.toLowerCase()));
+    return muscles;
+  }
+
   double calculateCaloriesBurned(int userWeight) {
     double totalCalories = 0;
     exercises.forEach((exercise, sets) {

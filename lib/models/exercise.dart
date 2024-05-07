@@ -5,9 +5,9 @@ class Exercise {
   final String description;
   final ExerciseType type;
   final Muscle primaryMuscle;
-  final Muscle secondaryMuscles;
+  final Muscle secondaryMuscle;
   final double metValue;
 
   Exercise(this.name, this.description, this.type, this.primaryMuscle,
-      this.secondaryMuscles, this.metValue);
+      this.secondaryMuscle, this.metValue);
 }
