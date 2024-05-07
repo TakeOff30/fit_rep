@@ -14,7 +14,10 @@ class Workout {
   );
 
   List<String> exerciseTypes() {
-    return exercises.keys.map((e) => e.type.name.toLowerCase()).toList();
+    return exercises.keys
+        .map((e) => e.type.name.toLowerCase())
+        .toSet()
+        .toList();
   }
 
   List<String> muscles() {
@@ -69,6 +72,7 @@ class CompletedWorkout extends Workout {
   final DateTime date;
   final int burnedCalories;
   final Duration duration;
+
   @override
   final String id = const Uuid().v4();
 
@@ -80,6 +84,11 @@ class PlannedWorkout extends Workout {
   @override
   final String id = const Uuid().v4();
   final DateTime date;
+  bool isDone = false;
+
+  set done(bool value) {
+    isDone = value;
+  }
 
   PlannedWorkout(workout, this.date) : super(workout.name, workout.exercises);
 }

@@ -86,8 +86,7 @@ class _FilterCardState extends State<FilterCard> {
                   },
                 ),
               ],
-            )
-            
+            ),
             const SizedBox(height: 10),
             Container(
               alignment: Alignment.center,

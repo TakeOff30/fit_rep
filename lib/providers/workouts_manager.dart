@@ -24,6 +24,12 @@ class WorkoutsManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Workout> getCreatedWorkouts() {
+    return _workouts
+        .where((w) => !(w is PlannedWorkout || w is CompletedWorkout))
+        .toList();
+  }
+
   List<Workout> getTodayWorkouts() {
     final now = DateTime.now();
     return _workouts.where((w) {

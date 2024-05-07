@@ -10,6 +10,20 @@ class FitRepTheme {
       primaryColor: primaryColor,
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: TextStyle(color: darkColor),
+        menuStyle: MenuStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => lightColor),
+        ),
+      ),
+      cardTheme: CardTheme(
+          color: lightColor,
+          surfaceTintColor: lightColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            side: BorderSide(color: darkColor, width: 1),
+          )),
       scaffoldBackgroundColor: lightColor,
       buttonTheme: ButtonThemeData(
         buttonColor: lightColor,
@@ -33,20 +47,30 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
-          fontFamily: 'Roboto',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineMedium: TextStyle(
-          fontSize: 18,
-          fontFamily: 'Roboto',
+          fontSize: 20,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineSmall: TextStyle(
-          fontSize: 14,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
+          color: darkColor,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          color: darkColor,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 14,
+          color: darkColor,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
           color: darkColor,
         ),
       ),
@@ -58,6 +82,20 @@ class FitRepTheme {
       primaryColor: primaryColor,
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: TextStyle(color: lightColor),
+        menuStyle: MenuStyle(
+          backgroundColor:
+              MaterialStateColor.resolveWith((states) => darkColor),
+        ),
+      ),
+      cardTheme: CardTheme(
+          color: darkColor,
+          surfaceTintColor: darkColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            side: BorderSide(color: lightColor, width: 1),
+          )),
       scaffoldBackgroundColor: darkColor,
       buttonTheme: ButtonThemeData(
         buttonColor: darkColor,

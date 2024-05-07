@@ -14,16 +14,30 @@ class MyGymScreen extends StatefulWidget {
 }
 
 class MyGymScreenState extends State<MyGymScreen> {
-  bool isTodayWorkout = false;
+  bool isTodayWorkout =
+      false; // Questa variabile dovrebbe controllare quale set di workout mostrare
   Filter filters = Filter('', [], '', []);
+  List<Workout> filteredWorkouts = [];
+
+  void updateWorkouts() {
+    var workoutsProvider = Provider.of<WorkoutsManager>(context, listen: false);
+    List<Workout> toShow = [];
+    setState(() {
+      if (isTodayWorkout) {
+        toShow =
+            workoutsProvider.getTodayWorkouts(); // Ottiene i workout di oggi
+      } else {
+        toShow =
+            workoutsProvider.getCreatedWorkouts(); // Ottiene i workout creati
+      }
+      filteredWorkouts = filters.filterWorkouts(toShow);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var workoutsProvider = Provider.of<WorkoutsManager>(context);
     var settingsProvider = Provider.of<SettingsManager>(context);
-    List<Workout> toShow = workoutsProvider.workouts;
-    List<Workout> filteredWorkouts = filters.filterWorkouts(toShow);
-
+    updateWorkouts();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -42,7 +56,11 @@ class MyGymScreenState extends State<MyGymScreen> {
                 onPressed: () {
                   setState(() {
                     isTodayWorkout = true;
-                    toShow = workoutsProvider.getTodayWorkouts();
+                    updateWorkouts();
+                    print(
+                        "Filtered workouts count: ${filteredWorkouts.length}");
+                    filteredWorkouts.forEach((workout) => print(workout
+                        .name)); // Assumendo che ci sia un attributo 'name'
                   });
                 },
                 style: ButtonStyle(
@@ -72,7 +90,11 @@ class MyGymScreenState extends State<MyGymScreen> {
                 onPressed: () {
                   setState(() {
                     isTodayWorkout = false;
-                    toShow = workoutsProvider.workouts;
+                    updateWorkouts();
+                    print(
+                        "Filtered workouts count: ${filteredWorkouts.length}");
+                    filteredWorkouts.forEach((workout) => print(workout
+                        .name)); // Assumendo che ci sia un attributo 'name'
                   });
                 },
                 style: ButtonStyle(
@@ -106,17 +128,18 @@ class MyGymScreenState extends State<MyGymScreen> {
             (newFilter) {
               setState(() {
                 filters = newFilter;
-                filteredWorkouts = filters.filterWorkouts(toShow);
+                updateWorkouts();
               });
             },
           ),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                for (var workout in filteredWorkouts)
-                  WorkoutCard(workout: workout)
-              ],
+              children: filteredWorkouts.map(
+                (workout) {
+                  return WorkoutCard(workout: workout);
+                },
+              ).toList(),
             ),
           ),
         ],
