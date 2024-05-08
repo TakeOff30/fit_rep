@@ -8,6 +8,7 @@ class SettingsManager extends ChangeNotifier {
   int _weight = 70;
   int _notificationFrequency = 0;
   ThemeData _mainTheme = FitRepTheme.light();
+  int weeklyWorkoutGoal = 3;
 
   bool get isDarkMode => _isDarkMode;
   bool get isNotificationEnabled => _isNotificationEnabled;
@@ -34,6 +35,11 @@ class SettingsManager extends ChangeNotifier {
 
   void setWeight(int weight) {
     _weight = weight;
+    notifyListeners();
+  }
+
+  void setWeeklyWorkoutGoal(int goal) {
+    weeklyWorkoutGoal = goal;
     notifyListeners();
   }
 

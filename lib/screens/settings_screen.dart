@@ -29,7 +29,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: context.watch<SettingsManager>().isDarkMode,
                   onChanged: (value) {
                     context.read<SettingsManager>().toggleDarkMode();
-                    print(context.read<SettingsManager>().isDarkMode);
                   },
                 ),
               ],
@@ -96,6 +95,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Text('kg',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text('Weekly workout goal',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge),
+                TextField(
+                  textAlign: TextAlign.right,
+                  maxLength: 1,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      constraints: BoxConstraints(maxWidth: 80),
+                      hintText: '3',
+                      hintStyle: TextStyle(color: Colors.grey)),
+                  onChanged: (value) =>
+                      settingsProvider.setWeeklyWorkoutGoal(int.parse(value)),
+                ),
               ],
             ),
           )
