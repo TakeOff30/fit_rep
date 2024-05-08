@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontFamily: 'Roboto',
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 50),
                     // Display bar chart if "Weekly kcal" is selected
                     WeeklyKcalChart(
                       selectedBarIndex: selectedBarIndex ?? 0,

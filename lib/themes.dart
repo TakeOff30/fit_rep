@@ -84,6 +84,13 @@ class FitRepTheme {
       primaryColorDark: darkColor,
       dropdownMenuTheme: DropdownMenuThemeData(
         textStyle: TextStyle(color: lightColor),
+        inputDecorationTheme: InputDecorationTheme(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: primaryColor, style: BorderStyle.solid, width: 3),
+          ),
+          hintStyle: TextStyle(color: lightColor),
+        ),
         menuStyle: MenuStyle(
           backgroundColor:
               MaterialStateColor.resolveWith((states) => darkColor),

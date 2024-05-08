@@ -57,10 +57,6 @@ class MyGymScreenState extends State<MyGymScreen> {
                   setState(() {
                     isTodayWorkout = true;
                     updateWorkouts();
-                    print(
-                        "Filtered workouts count: ${filteredWorkouts.length}");
-                    filteredWorkouts.forEach((workout) => print(workout
-                        .name)); // Assumendo che ci sia un attributo 'name'
                   });
                 },
                 style: ButtonStyle(
