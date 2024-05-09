@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
+import 'package:fit_rep/screens/exercises_selection.dart';
 
 class WorkoutCreation extends StatefulWidget {
   @override
@@ -9,6 +10,41 @@ class WorkoutCreation extends StatefulWidget {
 
 class _WorkoutCreationState extends State<WorkoutCreation> {
   final TextEditingController _nameController = TextEditingController();
+
+  Widget customContainer() {
+    return Container(
+      width: double.infinity, 
+      height: 60.0,
+      padding: EdgeInsets.all(16.0), 
+      decoration: BoxDecoration(
+        color: Colors.black, 
+        border: Border.all(color: Colors.white, width: 1), 
+        borderRadius: BorderRadius.circular(10.0), 
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text('Exercise 1', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: "Roboto", fontWeight: FontWeight.normal)),
+              SizedBox(width: 30.0), 
+              Container(
+                width: 10.0,
+                height: 10.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              SizedBox(width: 45.0), 
+              Text('3 Sets', style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: "Roboto", fontWeight: FontWeight.normal)),
+            ],
+          ),
+          Icon(Icons.close, color: Colors.white),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +97,17 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
                         icon: Icon(Icons.add, color: Color(0xFF39FF14)),
                         iconSize: 48,
                         onPressed: () {
-                          // Logic to add exercise
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ExercisesSelection(),
+                            ),
+                          );
                         },
                       )
                     ],
                   ),
+                  SizedBox(height: 20), 
+                  customContainer(), // customContainer() here
                 ],
               ),
             ),
