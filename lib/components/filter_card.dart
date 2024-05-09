@@ -55,6 +55,20 @@ class FilterCard extends StatefulWidget {
 }
 
 class _FilterCardState extends State<FilterCard> {
+  final workoutNameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    workoutNameController.text = widget.filter.workoutNameFilter;
+  }
+
+  @override
+  void dispose() {
+    workoutNameController.dispose();
+    super.dispose();
+  }
+
   final List<String> musclesList =
       Muscle.values.map((e) => e.name.toLowerCase()).toList();
 
@@ -80,6 +94,8 @@ class _FilterCardState extends State<FilterCard> {
                       widget.filter.workoutNameFilter = '';
                       widget.filter.musclesFilters = [];
                       widget.filter.exerciseTypeFilter = '';
+                      workoutNameController.text =
+                          widget.filter.workoutNameFilter;
                       widget.filter.exercisesFilters = [];
                       widget.onFilterChanged(widget.filter);
                     });
@@ -103,6 +119,7 @@ class _FilterCardState extends State<FilterCard> {
                       children: [
                         Expanded(
                           child: TextField(
+                            controller: workoutNameController,
                             decoration:
                                 InputDecoration(hintText: 'Workout name'),
                             onChanged: (value) {
