@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:fit_rep/screens/workout_creation.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -76,7 +77,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Aggiungi workout
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => WorkoutCreation()),
+          );
         },
         child: Icon(
           Icons.add,
