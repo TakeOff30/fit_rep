@@ -10,6 +10,15 @@ class FitRepTheme {
       primaryColor: primaryColor,
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
+      chipTheme: ChipThemeData(
+        backgroundColor: lightColor,
+        color: MaterialStateColor.resolveWith((states) => darkColor),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: darkColor),
+        titleTextStyle: TextStyle(color: darkColor),
+      ),
       dropdownMenuTheme: DropdownMenuThemeData(
         textStyle: TextStyle(color: darkColor),
         menuStyle: MenuStyle(
@@ -82,6 +91,15 @@ class FitRepTheme {
       primaryColor: primaryColor,
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: lightColor),
+        titleTextStyle: TextStyle(color: lightColor),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: darkColor,
+        color: MaterialStateColor.resolveWith((states) => lightColor),
+      ),
       dropdownMenuTheme: DropdownMenuThemeData(
         textStyle: TextStyle(color: lightColor),
         inputDecorationTheme: InputDecorationTheme(

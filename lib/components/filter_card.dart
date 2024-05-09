@@ -2,9 +2,11 @@ import 'package:fit_rep/config.dart';
 import 'package:fit_rep/enums.dart';
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/models/workout.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class Filter {
   String workoutNameFilter = '';
@@ -77,6 +79,7 @@ class _FilterCardState extends State<FilterCard> {
 
   @override
   Widget build(BuildContext context) {
+    var settingsManager = Provider.of<SettingsManager>(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -130,27 +133,37 @@ class _FilterCardState extends State<FilterCard> {
                             },
                           ),
                         ),
-                        DropdownButton<String>(
-                          isExpanded: true,
-                          hint: Text('Trained muscles'),
-                          items: musclesList.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              if (widget.filter.musclesFilters
-                                  .contains(value!)) {
-                                widget.filter.musclesFilters.remove(value);
-                              } else {
-                                widget.filter.musclesFilters.add(value!);
-                              }
-                              widget.onFilterChanged(widget.filter);
-                            });
-                          },
-                        ),
+                        Builder(builder: (context) {
+                          return DropdownButton<String>(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            dropdownColor: (settingsManager.isDarkMode)
+                                ? Theme.of(context).primaryColorDark
+                                : Theme.of(context).primaryColorLight,
+                            isExpanded: true,
+                            hint: Text('Trained muscles',
+                                style: TextStyle(
+                                    color: (settingsManager.isDarkMode)
+                                        ? Theme.of(context).primaryColorLight
+                                        : Theme.of(context).primaryColorDark)),
+                            items: musclesList.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                if (widget.filter.musclesFilters
+                                    .contains(value!)) {
+                                  widget.filter.musclesFilters.remove(value);
+                                } else {
+                                  widget.filter.musclesFilters.add(value!);
+                                }
+                                widget.onFilterChanged(widget.filter);
+                              });
+                            },
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -162,7 +175,15 @@ class _FilterCardState extends State<FilterCard> {
                       children: [
                         DropdownButton<String>(
                           isExpanded: true,
-                          hint: Text('Included exercises'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          dropdownColor: (settingsManager.isDarkMode)
+                              ? Theme.of(context).primaryColorDark
+                              : Theme.of(context).primaryColorLight,
+                          hint: Text('Included exercises',
+                              style: TextStyle(
+                                  color: (settingsManager.isDarkMode)
+                                      ? Theme.of(context).primaryColorLight
+                                      : Theme.of(context).primaryColorDark)),
                           items: fitRepExercises.map((Exercise exe) {
                             return DropdownMenuItem<String>(
                               value: exe.name,
@@ -183,7 +204,15 @@ class _FilterCardState extends State<FilterCard> {
                         ),
                         DropdownButton<String>(
                           isExpanded: true,
-                          hint: Text('Exercise type'),
+                          style: Theme.of(context).textTheme.bodyMedium,
+                          dropdownColor: (settingsManager.isDarkMode)
+                              ? Theme.of(context).primaryColorDark
+                              : Theme.of(context).primaryColorLight,
+                          hint: Text('Exercise type',
+                              style: TextStyle(
+                                  color: (settingsManager.isDarkMode)
+                                      ? Theme.of(context).primaryColorLight
+                                      : Theme.of(context).primaryColorDark)),
                           value: widget.filter.exerciseTypeFilter == ''
                               ? null
                               : widget.filter.exerciseTypeFilter,

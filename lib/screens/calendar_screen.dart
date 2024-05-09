@@ -1,4 +1,8 @@
+import 'package:fit_rep/components/workout_card.dart';
+import 'package:fit_rep/models/workout.dart';
+import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:fit_rep/screens/workout_creation.dart';
 
@@ -9,9 +13,11 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   DateTime _selectedDay = DateTime.now();
+  List<Workout> _selectedDayWorkouts = [];
 
   @override
   Widget build(BuildContext context) {
+    var workoutsManager = Provider.of<WorkoutsManager>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,6 +36,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
                 _selectedDay = selectedDay;
+                _selectedDayWorkouts =
+                    workoutsManager.getWorkoutsByDay(selectedDay);
               });
             },
             calendarStyle: CalendarStyle(
@@ -48,10 +56,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 fontWeight: FontWeight.bold,
               ),
               selectedTextStyle: TextStyle(
-                fontFamily: 'Roboto',
-                color: Color(0xFF1E1E1E),
-                fontWeight: FontWeight.bold
-              ),
+                  fontFamily: 'Roboto',
+                  color: Color(0xFF1E1E1E),
+                  fontWeight: FontWeight.bold),
               weekendTextStyle: TextStyle(fontFamily: 'Roboto'),
               holidayTextStyle: TextStyle(fontFamily: 'Roboto'),
             ),
@@ -65,12 +72,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
             ),
           ),
           Expanded(
-            child: Card(
-              child: ListTile(
-                title: Text('Strength'),
-                subtitle: Text('Exercises: 5\nKcal: 500\nXp: 260'),
-                trailing: Icon(Icons.arrow_forward),
-              ),
+            child: ListView(
+              padding: const EdgeInsets.all(10),
+              children: _selectedDayWorkouts
+                  .map((workout) => WorkoutCard(workout: workout))
+                  .toList(),
             ),
           ),
         ],
