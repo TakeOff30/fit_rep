@@ -11,8 +11,9 @@ class FitRepTheme {
       primaryColorLight: lightColor,
       primaryColorDark: darkColor,
       chipTheme: ChipThemeData(
-        backgroundColor: lightColor,
-        color: MaterialStateColor.resolveWith((states) => darkColor),
+        deleteIconColor: darkColor,
+        labelStyle: TextStyle(color: darkColor),
+        color: MaterialStateColor.resolveWith((states) => lightColor),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
@@ -97,8 +98,9 @@ class FitRepTheme {
         titleTextStyle: TextStyle(color: lightColor),
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: darkColor,
-        color: MaterialStateColor.resolveWith((states) => lightColor),
+        deleteIconColor: lightColor,
+        labelStyle: TextStyle(color: lightColor),
+        color: MaterialStateColor.resolveWith((states) => darkColor),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         textStyle: TextStyle(color: lightColor),
