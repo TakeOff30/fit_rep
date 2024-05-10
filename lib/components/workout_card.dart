@@ -1,5 +1,6 @@
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
+import 'package:fit_rep/screens/workout_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,8 +85,13 @@ class WorkoutCard extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () {
-                      //Navigator.of(context).pushNamed('/workout_preview',
-                      //    arguments: {'workout': workout});
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WorkoutPreviewScreen(
+                                  workout: workout,
+                                )),
+                      );
                     },
                     icon: Icon(Icons.arrow_forward_ios_rounded,
                         color: Color.fromARGB(255, 192, 192, 192), size: 32)),
