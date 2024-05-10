@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:fit_rep/screens/muscles_list.dart';
 
-class ExercisesSelection extends StatefulWidget {
+class MuscleExercises extends StatefulWidget {
+  final String muscle;
+
+  MuscleExercises({required this.muscle});
+
   @override
-  _ExercisesSelectionState createState() => _ExercisesSelectionState();
+  _MuscleExercisesState createState() => _MuscleExercisesState();
 }
 
-class _ExercisesSelectionState extends State<ExercisesSelection> {
-  List<String> exercises = ['Exercise 1', 'Exercise 2', 'Exercise 3'];
+class _MuscleExercisesState extends State<MuscleExercises> {
+  List<String> exercises = [];
   int _selectedIndex = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch exercises for the selected muscle
+    // This is just a placeholder, replace with your actual logic
+    exercises = [
+      'Exercise 1 for ${widget.muscle}',
+      'Exercise 2 for ${widget.muscle}',
+      'Exercise 3 for ${widget.muscle}'
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Exercises List',
+          '${widget.muscle} Exercises', // Use the selected muscle in the title
           style: TextStyle(
               fontFamily: 'Roboto', fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), 
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             Container(
@@ -36,8 +51,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                       decoration: InputDecoration(
                         hintText: 'Search',
                         border: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.all(8.0), 
+                        contentPadding: EdgeInsets.all(8.0),
                         isDense:
                             true, // remove the default padding of the TextField
                       ),
@@ -53,40 +67,6 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
               ),
             ),
             SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('All'),
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(150, 36),
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.all(8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-                ElevatedButton( //redirect to muscles_list.dart
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MusclesList()),
-                    );
-                  },
-                  child: Text('By Muscle'),
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(150, 36),
-                    backgroundColor: Colors.blue,
-                    padding: EdgeInsets.all(8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             Expanded(
               child: ListView.builder(
                 itemCount: exercises.length,
@@ -104,7 +84,10 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                           });
                         },
                       ),
-                      Divider(height: 1),
+                      Divider(
+                        color: Colors.grey,
+                        height: 1,
+                      ),
                     ],
                   );
                 },

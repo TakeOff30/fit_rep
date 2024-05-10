@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fit_rep/screens/muscles_list.dart';
+import 'package:fit_rep/screens/exercises_selection.dart';
+import 'package:fit_rep/screens/muscle_exercises.dart';
 
-class ExercisesSelection extends StatefulWidget {
+class MusclesList extends StatefulWidget {
   @override
-  _ExercisesSelectionState createState() => _ExercisesSelectionState();
+  _MusclesListState createState() => _MusclesListState();
 }
 
-class _ExercisesSelectionState extends State<ExercisesSelection> {
-  List<String> exercises = ['Exercise 1', 'Exercise 2', 'Exercise 3'];
+class _MusclesListState extends State<MusclesList> {
+  List<String> muscles = ['Muscle 1', 'Muscle 2', 'Muscle 3'];
   int _selectedIndex = -1;
 
   @override
@@ -15,13 +16,13 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Exercises List',
+          'Muscles List',
           style: TextStyle(
               fontFamily: 'Roboto', fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), 
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             Container(
@@ -36,8 +37,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                       decoration: InputDecoration(
                         hintText: 'Search',
                         border: InputBorder.none,
-                        contentPadding:
-                            EdgeInsets.all(8.0), 
+                        contentPadding: EdgeInsets.all(8.0),
                         isDense:
                             true, // remove the default padding of the TextField
                       ),
@@ -57,7 +57,14 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ExercisesSelection(),
+                      ),
+                    );
+                  },
                   child: Text('All'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(150, 36),
@@ -68,13 +75,9 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                     ),
                   ),
                 ),
-                ElevatedButton( //redirect to muscles_list.dart
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MusclesList()),
-                    );
-                  },
+                ElevatedButton(
+                  //redirect to muscles_list.dart
+                  onPressed: () {},
                   child: Text('By Muscle'),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(150, 36),
@@ -87,47 +90,33 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                 ),
               ],
             ),
+            SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
-                itemCount: exercises.length,
+                itemCount: muscles.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: Text(exercises[index]),
-                        trailing:
-                            _selectedIndex == index ? Icon(Icons.check) : null,
+                        title: Text(muscles[index]),
+                        trailing: Icon(Icons.arrow_forward_ios_rounded),
                         onTap: () {
                           setState(() {
                             _selectedIndex = index;
                           });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    MuscleExercises(muscle: muscles[index])),
+                          );
                         },
                       ),
                       Divider(height: 1),
                     ],
                   );
                 },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Button action here
-                },
-                child: Text(
-                  'Select',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF39FF14),
-                  fixedSize: Size(170, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
               ),
             ),
           ],
