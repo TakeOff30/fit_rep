@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fit_rep/screens/muscles_list.dart';
+import 'package:fit_rep/config.dart';
+import 'package:fit_rep/models/exercise.dart';
 
 class ExercisesSelection extends StatefulWidget {
   @override
@@ -7,7 +9,6 @@ class ExercisesSelection extends StatefulWidget {
 }
 
 class _ExercisesSelectionState extends State<ExercisesSelection> {
-  List<String> exercises = ['Exercise 1', 'Exercise 2', 'Exercise 3'];
   int _selectedIndex = -1;
 
   @override
@@ -89,13 +90,13 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: exercises.length,
+                itemCount: fitRepExercises.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: <Widget>[
                       ListTile(
                         contentPadding: EdgeInsets.zero,
-                        title: Text(exercises[index]),
+                        title: Text(fitRepExercises[index].name),
                         trailing:
                             _selectedIndex == index ? Icon(Icons.check) : null,
                         onTap: () {
