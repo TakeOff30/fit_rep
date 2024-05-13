@@ -85,7 +85,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WorkoutCreation()),
+            MaterialPageRoute(builder: (context) => WorkoutCreation(_selectedDay)),
           );
         },
         child: Icon(

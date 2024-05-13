@@ -24,7 +24,7 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
       body: ListView(children: [
         for (var entry in widget.workout.exercises.entries)
           ExerciseListElement(
-              exercise: entry.key, sets: entry.value, onTap: () {})
+              exercise: entry.key, sets: entry.value, onTap: () {}, onDelete: () {})
       ]),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:fit_rep/config.dart';
+import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,27 @@ class WorkoutsManager extends ChangeNotifier {
             'Full Body Workout',
             {},
           ),
-          DateTime(2024, 5, 15, 10, 0, 0, 0, 0))
+          DateTime(2024, 5, 15, 10, 0, 0, 0, 0)),
+    ],
+    '13/5/2024': [
+      PlannedWorkout(
+          Workout('Today 1', {
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+            ],
+            fitRepExercises[1]: [
+              ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+              ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+            ],
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+            ],
+          }),
+          DateTime(2024, 5, 13, 10, 0, 0, 0, 0))
     ],
   };
   final Map<String, List<Workout>> completedWorkouts = {};
@@ -77,7 +98,7 @@ class WorkoutsManager extends ChangeNotifier {
   }
 
   void addPlannedWorkout(DateTime date, Workout workout) {
-    if (date.isBefore(DateTime.now())) {
+    if (date.isBefore(DateTime.now().subtract(Duration(minutes: 1)))) {
       throw Exception('The date of the workout is in the past.');
     }
     String dateString = formatDate(date);
@@ -90,7 +111,7 @@ class WorkoutsManager extends ChangeNotifier {
   }
 
   void addCompletedWorkout(DateTime date, Workout workout) {
-    if (date.isAfter(DateTime.now())) {
+    if (date.isAfter(DateTime.now().add(Duration(minutes: 1)))) {
       throw Exception('The date of the workout is in the future.');
     }
     String dateString = formatDate(date);

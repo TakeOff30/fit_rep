@@ -6,6 +6,7 @@ import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fit_rep/screens/workout_creation.dart';
+import 'package:fit_rep/config.dart';
 
 class MyGymScreen extends StatefulWidget {
   MyGymScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class MyGymScreenState extends State<MyGymScreen> {
     setState(() {
       if (isTodayWorkout) {
         toShow =
-            workoutsProvider.getTodayWorkouts(); // Ottiene i workout di oggi
+            workoutsProvider.getWorkoutsByDay(DateTime.now()); // Ottiene i workout di oggi
       } else {
         toShow =
             workoutsProvider.getCreatedWorkouts(); // Ottiene i workout creati
@@ -151,7 +152,7 @@ class MyGymScreenState extends State<MyGymScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WorkoutCreation()),
+            MaterialPageRoute(builder: (context) => (isTodayWorkout) ? WorkoutCreation(DateTime.now()) : WorkoutCreation(null)),
           );
         },
         child: Icon(

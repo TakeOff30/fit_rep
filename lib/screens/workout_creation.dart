@@ -1,4 +1,7 @@
 import 'package:fit_rep/components/exercise_list_element.dart';
+import 'package:fit_rep/config.dart';
+import 'package:fit_rep/models/exercise.dart';
+import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,19 +9,17 @@ import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/exercises_selection.dart';
 
 class WorkoutCreation extends StatefulWidget {
+  DateTime? date;
+
+  WorkoutCreation(this.date);
   @override
   _WorkoutCreationState createState() => _WorkoutCreationState();
 }
 
 class _WorkoutCreationState extends State<WorkoutCreation> {
-  Workout workout = Workout('', {});
-  late TextEditingController _nameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: workout.name);
-  }
+  Workout workout = Workout('', {
+    fitRepExercises[0]: [ExerciseSet.repsSet(restTime: 0, reps: 0, weight: 0)]
+  });
 
   Widget customContainer() {
     return Container(
@@ -67,6 +68,7 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
 
   @override
   Widget build(BuildContext context) {
+    var workoutsProvider = Provider.of<WorkoutsManager>(context);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -88,7 +90,11 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextField(
-                    controller: _nameController,
+                    onChanged: (value) {
+                      setState(() {
+                        workout.name = value;
+                      });
+                    },
                     style:
                         TextStyle(color: const Color.fromARGB(255, 14, 13, 13)),
                     decoration: InputDecoration(
@@ -110,7 +116,8 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '4 Exercises',
+                        ' %d Exercises'.replaceAll(
+                            '%d', workout.exercises.length.toString()),
                         style: TextStyle(
                             color: const Color.fromARGB(255, 15, 14, 14),
                             fontSize: 18),
@@ -121,19 +128,37 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ExercisesSelection(),
+                              builder: (context) =>
+                                  ExercisesSelection((Exercise exe) {
+                                setState(() {
+                                  if (workout.exercises[exe] == null)
+                                    workout.exercises[exe] = [];
+                                });
+                              }),
                             ),
                           );
                         },
                       )
                     ],
                   ),
-                  SizedBox(height: 20),
+                  (workout.exercises.entries.length == 0)
+                      ? Text('No exercises yet...')
+                      : SizedBox(height: 20),
                   ...workout.exercises.entries
-                      .map((entry) => ExerciseListElement(
-                          exercise: entry.key, sets: entry.value, onTap: () {}))
+                      .map((entry) => Container(
+                            margin: EdgeInsets.all(8),
+                            child: ExerciseListElement(
+                              exercise: entry.key,
+                              sets: entry.value,
+                              onTap: () {},
+                              onDelete: (Exercise toRemove) {
+                                setState(() {
+                                  workout.exercises.remove(toRemove);
+                                });
+                              },
+                            ),
+                          ))
                       .toList()
-                  // customContainer() here
                 ],
               ),
             ),
@@ -142,7 +167,12 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
             padding: const EdgeInsets.only(bottom: 32),
             child: ElevatedButton(
               onPressed: () {
-                // Button action here
+                if (widget.date != null) {
+                  workoutsProvider.addPlannedWorkout(widget.date!, workout);
+                } else {
+                  workoutsProvider.addWorkout(workout);
+                }
+                Navigator.of(context).pop();
               },
               child: Text(
                 'Create',

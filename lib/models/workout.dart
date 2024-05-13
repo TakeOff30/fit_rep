@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 
 class Workout {
   final String id = const Uuid().v4();
-  final String name;
+  String name;
   final Map<Exercise, List<ExerciseSet>> exercises;
 
   Workout(
