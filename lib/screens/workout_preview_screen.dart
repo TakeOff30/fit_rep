@@ -21,11 +21,24 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
         widget.workout.name,
         style: Theme.of(context).textTheme.headlineLarge,
       )),
-      body: ListView(children: [
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ListView(children: [
         for (var entry in widget.workout.exercises.entries)
           ExerciseListElement(
               exercise: entry.key, sets: entry.value, onTap: () {}, onDelete: () {})
       ]),
+      Row(
+        children: [
+          IconButton.outlined(onPressed: () {}, icon: Icon(Icons.change_circle)),
+          IconButton.outlined(onPressed: () {}, icon: Icon(Icons.start))
+        ],
+      )
+        ],
+      )
+      
+      
     );
   }
 }

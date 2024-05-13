@@ -24,7 +24,9 @@ class ExerciseListElement extends StatelessWidget {
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: Row(
+      child: GestureDetector(
+        onTap: () => onTap(),
+        child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
@@ -52,6 +54,9 @@ class ExerciseListElement extends StatelessWidget {
           )
         ],
       ),
+      )
+      
+      
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/exercises_selection.dart';
+import 'package:fit_rep/screens/set_selection.dart';
 
 class WorkoutCreation extends StatefulWidget {
   DateTime? date;
@@ -150,7 +151,20 @@ class _WorkoutCreationState extends State<WorkoutCreation> {
                             child: ExerciseListElement(
                               exercise: entry.key,
                               sets: entry.value,
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => SetSelection(
+                                      (ExerciseSet set) {
+                                        setState(() {
+                                          workout.exercises[entry.key]!
+                                              .add(set);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
                               onDelete: (Exercise toRemove) {
                                 setState(() {
                                   workout.exercises.remove(toRemove);
