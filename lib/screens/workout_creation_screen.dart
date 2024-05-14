@@ -10,9 +10,10 @@ import 'package:fit_rep/screens/exercises_selection.dart';
 import 'package:fit_rep/screens/set_selection.dart';
 
 class WorkoutCreationScreen extends StatefulWidget {
+  final Workout? toModify;
   DateTime? date;
 
-  WorkoutCreationScreen(this.date);
+  WorkoutCreationScreen({super.key, this.date, this.toModify});
   @override
   _WorkoutCreationScreenState createState() => _WorkoutCreationScreenState();
 }
@@ -25,6 +26,22 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
     ]
   });
 
+  TextEditingController workoutNameController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.toModify != null) {
+      workout = widget.toModify!;
+    }
+    workoutNameController = TextEditingController(text: workout.name);
+  }
+
+  @override
+  void dispose() {
+    workoutNameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var workoutsProvider = Provider.of<WorkoutsManager>(context);
@@ -35,7 +52,9 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("Create Workout", style: TextStyle(fontSize: 20)),
+        title: Text(
+            (widget.toModify != null) ? "Modify Workout" : "Create Workout",
+            style: TextStyle(fontSize: 20)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -49,6 +68,7 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextField(
+                    controller: workoutNameController,
                     onChanged: (value) {
                       setState(() {
                         workout.name = value;
@@ -113,13 +133,11 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => SetSelection(
-                                      entry.value,
-                                      (List<ExerciseSet> sets) {
-                                        setState(() {
-                                          workout.exercises[entry.key] = sets;
-                                        });
-                                      }
-                                    ),
+                                        entry.value, (List<ExerciseSet> sets) {
+                                      setState(() {
+                                        workout.exercises[entry.key] = sets;
+                                      });
+                                    }),
                                   ),
                                 );
                               },
@@ -139,15 +157,20 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: ElevatedButton(
               onPressed: () {
-                if (widget.date != null) {
-                  workoutsProvider.addPlannedWorkout(widget.date!, workout);
+                if (widget.toModify != null) {
+                  workoutsProvider.modifyWorkout(widget.toModify!, workout);
+                  Navigator.of(context).pop();
                 } else {
-                  workoutsProvider.addWorkout(workout);
+                  if (widget.date != null) {
+                    workoutsProvider.addPlannedWorkout(widget.date!, workout);
+                  } else {
+                    workoutsProvider.addWorkout(workout);
+                  }
+                  Navigator.of(context).pop();
                 }
-                Navigator.of(context).pop();
               },
               child: Text(
-                'Create',
+                'Save',
                 style: TextStyle(
                     color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
               ),

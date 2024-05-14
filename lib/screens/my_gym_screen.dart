@@ -154,8 +154,8 @@ class MyGymScreenState extends State<MyGymScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => (isTodayWorkout)
-                    ? WorkoutCreationScreen(DateTime.now())
-                    : WorkoutCreationScreen(null)),
+                    ? WorkoutCreationScreen(date: DateTime.now())
+                    : WorkoutCreationScreen()),
           );
         },
         child: Icon(

@@ -85,6 +85,22 @@ class WorkoutsManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void modifyWorkout(Workout toModify, Workout workout) {
+    int index = _workouts.indexWhere((w) => w.id == toModify.id);
+    if (index == -1) {
+      index = plannedWorkouts.values
+          .expand((e) => e)
+          .toList()
+          .indexWhere((w) => w.id == toModify.id);
+      plannedWorkouts.values.expand((e) => e).toList()[index] =
+          workout as PlannedWorkout;
+      notifyListeners();
+      return;
+    }
+    _workouts[index] = workout;
+    notifyListeners();
+  }
+
   void removeWorkout(Workout workout) {
     _workouts.remove(workout);
     notifyListeners();
