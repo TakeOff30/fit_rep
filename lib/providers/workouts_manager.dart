@@ -30,18 +30,42 @@ class WorkoutsManager extends ChangeNotifier {
       PlannedWorkout(
           Workout('Today 1', {
             fitRepExercises[0]: [
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
             ],
             fitRepExercises[1]: [
-              ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
-              ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 10),
+                  reps: 20,
+                  weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 10),
+                  reps: 20,
+                  weight: 10),
             ],
             fitRepExercises[0]: [
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-              ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
             ],
           }),
           DateTime(2024, 5, 13, 10, 0, 0, 0, 0))

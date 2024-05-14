@@ -36,7 +36,7 @@ class Workout {
       for (var exeSet in sets) {
         if (exeSet.isTimed) {
           exerciseCalories +=
-              exercise.metValue * exeSet.executionTime * 3.5 * userWeight;
+              exercise.metValue * exeSet.executionTime.inSeconds * 3.5 * userWeight;
         } else {
           exerciseCalories += 0.025 *
               exeSet.weight *
@@ -57,7 +57,7 @@ class Workout {
       int exerciseXP = 0;
       for (var exeSet in sets) {
         if (exeSet.isTimed) {
-          exerciseXP += exeSet.executionTime;
+          exerciseXP += exeSet.executionTime.inSeconds;
         } else {
           exerciseXP += exeSet.reps * 5;
         }

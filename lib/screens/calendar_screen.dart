@@ -4,7 +4,7 @@ import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:fit_rep/screens/workout_creation.dart';
+import 'package:fit_rep/screens/workout_creation_screen.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -85,7 +85,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => WorkoutCreation(_selectedDay)),
+            MaterialPageRoute(
+                builder: (context) => WorkoutCreationScreen(_selectedDay)),
           );
         },
         child: Icon(

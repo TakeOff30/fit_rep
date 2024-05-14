@@ -89,74 +89,127 @@ List<Exercise> fitRepExercises = [
 List<Workout> appWorkouts = [
   Workout('Chest Day', {
     fitRepExercises[0]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[1]: [
-      ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
-      ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+      ExerciseSet.repsSet(
+          restTime: Duration(minutes: 0, seconds: 10), reps: 20, weight: 10),
+      ExerciseSet.repsSet(
+          restTime: Duration(minutes: 0, seconds: 10), reps: 20, weight: 10),
     ],
     fitRepExercises[0]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
   }),
   Workout('Back Day', {
     fitRepExercises[1]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[4]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[5]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
   }),
   Workout('Leg Day', {
     fitRepExercises[0]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[3]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[2]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
     fitRepExercises[1]: [
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-      ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.repsSet(
+          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
     ],
   }),
   CompletedWorkout(
       Workout('Completed 1', {
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
         fitRepExercises[1]: [
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
         ],
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
       }),
       DateTime.utc(2024, 5, 5),
@@ -165,18 +218,42 @@ List<Workout> appWorkouts = [
   CompletedWorkout(
       Workout('Completed 2', {
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
         fitRepExercises[1]: [
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
         ],
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
       }),
       DateTime.utc(2024, 4, 20),
@@ -185,18 +262,42 @@ List<Workout> appWorkouts = [
   PlannedWorkout(
       Workout('Planned 1', {
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
         fitRepExercises[1]: [
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
-          ExerciseSet.repsSet(restTime: 60, reps: 20, weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
+          ExerciseSet.repsSet(
+              restTime: Duration(minutes: 0, seconds: 10),
+              reps: 20,
+              weight: 10),
         ],
         fitRepExercises[0]: [
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
-          ExerciseSet.repsSet(reps: 10, weight: 135, restTime: 60),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
+          ExerciseSet.repsSet(
+              reps: 10,
+              weight: 135,
+              restTime: Duration(minutes: 0, seconds: 10)),
         ],
       }),
       DateTime.utc(2024, 6, 20)),
