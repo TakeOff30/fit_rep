@@ -11,8 +11,7 @@ class WorkoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsProvider =
-        Provider.of<SettingsManager>(context, listen: false);
+    final settingsProvider = Provider.of<SettingsManager>(context);
 
     return Container(
       width: double.infinity,

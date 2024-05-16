@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fit_rep/enums.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/foundation.dart';
@@ -110,4 +112,34 @@ class StatisticsManager extends ChangeNotifier {
     _totalWorkoutDuration += duration;
     notifyListeners();
   }
+
+  // Future<void> saveStatistics() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('weeklyCalories', jsonEncode(_weeklyCalories));
+  //   await prefs.setString('trainedMuscles', jsonEncode(_trainedMuscles));
+  //   await prefs.setInt('workoutsCompleted', _workoutsCompleted);
+  //   await prefs.setInt(
+  //       'totalWeeklyWorkoutsCompleted', _totalWeeklyWorkoutsCompleted);
+  //   await prefs.setInt('totalWorkoutDuration', _totalWorkoutDuration.inMinutes);
+  //   await prefs.setInt('userLevel', userLevel);
+  //   await prefs.setInt('totalXPToLevelUp', totalXPToLevelUp);
+  //   await prefs.setInt('currentXP', currentXP);
+  // }
+
+  // Future<void> loadStatistics() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   _weeklyCalories = jsonDecode(prefs.getString('weeklyCalories') ?? '{}')
+  //       .map<String, int>((key, value) => MapEntry(key, value as int));
+  //   _trainedMuscles = jsonDecode(prefs.getString('trainedMuscles') ?? '{}')
+  //       .map<Muscle, double>((key, value) =>
+  //           MapEntry(Muscle.values[int.parse(key)], value as double));
+  //   _workoutsCompleted = prefs.getInt('workoutsCompleted') ?? 0;
+  //   _totalWeeklyWorkoutsCompleted =
+  //       prefs.getInt('totalWeeklyWorkoutsCompleted') ?? 0;
+  //   _totalWorkoutDuration =
+  //       Duration(minutes: prefs.getInt('totalWorkoutDuration') ?? 0);
+  //   userLevel = prefs.getInt('userLevel') ?? 1;
+  //   totalXPToLevelUp = prefs.getInt('totalXPToLevelUp') ?? 100;
+  //   currentXP = prefs.getInt('currentXP') ?? 0;
+  // }
 }

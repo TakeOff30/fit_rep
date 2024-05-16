@@ -25,6 +25,14 @@ class _FitRepAppState extends State<FitRepApp> {
   final SettingsManager _settingsManager = SettingsManager();
   final StatisticsManager _statisticsManager = StatisticsManager();
 
+  @override
+  void initState() {
+    super.initState();
+    // _workoutsManager.loadWorkouts();
+    // _settingsManager.loadSettings();
+    // _statisticsManager.loadStatistics();
+  }
+
   int _selectedIndex = 0;
   final List<Widget> destinations = <Widget>[
     MyGymScreen(),

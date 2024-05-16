@@ -4,7 +4,7 @@ import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutsManager extends ChangeNotifier {
-  final List<Workout> _workouts = appWorkouts;
+  List<Workout> _workouts = appWorkouts;
   final Map<String, List<Workout>> plannedWorkouts = {
     '15/5/2024': [
       PlannedWorkout(
@@ -171,4 +171,17 @@ class WorkoutsManager extends ChangeNotifier {
       ...(completedWorkouts[dateString] ?? [])
     ];
   }
+
+  // Future<void> saveWorkouts() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('workouts', jsonEncode(_workouts));
+  // }
+
+  // Future<void> loadWorkouts() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final workoutsString = prefs.getString('workouts');
+  //   if (workoutsString != null) {
+  //     _workouts = jsonDecode(workoutsString);
+  //   }
+  // }
 }

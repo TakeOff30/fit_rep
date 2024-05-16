@@ -33,7 +33,8 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
             TextButton(
               child: Text('Delete'),
               onPressed: () {
-                Provider.of<WorkoutsManager>(context, listen: false).removeWorkout(widget.workout);
+                Provider.of<WorkoutsManager>(context)
+                    .removeWorkout(widget.workout);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
@@ -46,91 +47,93 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.workout.name,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        actions: [
-          PopupMenuButton<String>(
-            onSelected: (String value) {
-              if (value == 'edit') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WorkoutCreationScreen(
-                      toModify: widget.workout,
-                    ),
-                  ),
-                );
-              } else if (value == 'delete') {
-                _showDeleteConfirmationDialog();
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem<String>(
-                  value: 'edit',
-                  child: ListTile(
-                    leading: Icon(Icons.edit),
-                    title: Text('Edit'),
-                  ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'delete',
-                  child: ListTile(
-                    leading: Icon(Icons.delete),
-                    title: Text('Delete'),
-                  ),
-                ),
-              ];
-            },
+    return Consumer<WorkoutsManager>(builder: (context, value, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.workout.name,
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  for (var entry in widget.workout.exercises.entries)
-                    ExerciseListElement(
-                      exercise: entry.key,
-                      sets: entry.value,
-                      onTap: () {},
-                      onDelete: () {},
-                      canDelete: false,
+          actions: [
+            PopupMenuButton<String>(
+              onSelected: (String value) {
+                if (value == 'edit') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WorkoutCreationScreen(
+                        toModify: widget.workout,
+                      ),
                     ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  'Start',
-                  style: TextStyle(
-                    color: const Color.fromARGB(255, 6, 6, 6),
-                    fontSize: 20,
+                  );
+                } else if (value == 'delete') {
+                  _showDeleteConfirmationDialog();
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    value: 'edit',
+                    child: ListTile(
+                      leading: Icon(Icons.edit),
+                      title: Text('Edit'),
+                    ),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF39FF14),
-                  fixedSize: Size(170, 48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                  PopupMenuItem<String>(
+                    value: 'delete',
+                    child: ListTile(
+                      leading: Icon(Icons.delete),
+                      title: Text('Delete'),
+                    ),
                   ),
-                ),
-              ),
+                ];
+              },
             ),
           ],
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    for (var entry in widget.workout.exercises.entries)
+                      ExerciseListElement(
+                        exercise: entry.key,
+                        sets: entry.value,
+                        onTap: () {},
+                        onDelete: () {},
+                        canDelete: false,
+                      ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Start',
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 6, 6, 6),
+                      fontSize: 20,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF39FF14),
+                    fixedSize: Size(170, 48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

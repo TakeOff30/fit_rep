@@ -47,4 +47,24 @@ class SettingsManager extends ChangeNotifier {
     _notificationFrequency = frequency;
     notifyListeners();
   }
+
+  // void loadSettings() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+  //   _isNotificationEnabled = prefs.getBool('isNotificationEnabled') ?? true;
+  //   _height = prefs.getInt('height') ?? 180;
+  //   _weight = prefs.getInt('weight') ?? 70;
+  //   _notificationFrequency = prefs.getInt('notificationFrequency') ?? 0;
+  //   _mainTheme = isDarkMode ? FitRepTheme.dark() : FitRepTheme.light();
+  //   notifyListeners();
+  // }
+
+  // Future<void> saveSettings() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool('isDarkMode', isDarkMode);
+  //   prefs.setBool('isNotificationEnabled', isNotificationEnabled);
+  //   prefs.setInt('height', height);
+  //   prefs.setInt('weight', weight);
+  //   prefs.setInt('notificationFrequency', notificationFrequency);
+  // }
 }
