@@ -21,27 +21,24 @@ class MyGymScreenState extends State<MyGymScreen> {
   Filter filters = Filter('', [], '', []);
   List<Workout> filteredWorkouts = [];
 
-  void updateWorkouts() {
-    var workoutsProvider = Provider.of<WorkoutsManager>(context);
-    List<Workout> toShow = [];
-    setState(() {
-      if (isTodayWorkout) {
-        toShow = workoutsProvider
-            .getWorkoutsByDay(DateTime.now()); // Ottiene i workout di oggi
-      } else {
-        toShow =
-            workoutsProvider.getCreatedWorkouts(); // Ottiene i workout creati
-      }
-      filteredWorkouts = filters.filterWorkouts(toShow);
-    });
-  }
+  void updateWorkouts() {}
 
   @override
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingsManager>(context);
+
     updateWorkouts();
     return Consumer<WorkoutsManager>(
         builder: (context, workoutsManager, child) {
+      List<Workout> toShow = [];
+      if (isTodayWorkout) {
+        toShow = workoutsManager
+            .getWorkoutsByDay(DateTime.now()); // Ottiene i workout di oggi
+      } else {
+        toShow =
+            workoutsManager.getCreatedWorkouts(); // Ottiene i workout creati
+      }
+      filteredWorkouts = filters.filterWorkouts(toShow);
       return Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -62,6 +59,15 @@ class MyGymScreenState extends State<MyGymScreen> {
                       setState(() {
                         isTodayWorkout = true;
                         updateWorkouts();
+                        List<Workout> toShow = [];
+                        if (isTodayWorkout) {
+                          toShow = workoutsManager.getWorkoutsByDay(
+                              DateTime.now()); // Ottiene i workout di oggi
+                        } else {
+                          toShow = workoutsManager
+                              .getCreatedWorkouts(); // Ottiene i workout creati
+                        }
+                        filteredWorkouts = filters.filterWorkouts(toShow);
                         print(
                             "Filtered workouts count: ${filteredWorkouts.length}");
                         filteredWorkouts.forEach((workout) => print(workout
@@ -97,6 +103,15 @@ class MyGymScreenState extends State<MyGymScreen> {
                       setState(() {
                         isTodayWorkout = false;
                         updateWorkouts();
+                        List<Workout> toShow = [];
+                        if (isTodayWorkout) {
+                          toShow = workoutsManager.getWorkoutsByDay(
+                              DateTime.now()); // Ottiene i workout di oggi
+                        } else {
+                          toShow = workoutsManager
+                              .getCreatedWorkouts(); // Ottiene i workout creati
+                        }
+                        filteredWorkouts = filters.filterWorkouts(toShow);
                         print(
                             "Filtered workouts count: ${filteredWorkouts.length}");
                         filteredWorkouts.forEach((workout) => print(workout
@@ -135,6 +150,15 @@ class MyGymScreenState extends State<MyGymScreen> {
                 (newFilter) {
                   setState(() {
                     filters = newFilter;
+                    List<Workout> toShow = [];
+                    if (isTodayWorkout) {
+                      toShow = workoutsManager.getWorkoutsByDay(
+                          DateTime.now()); // Ottiene i workout di oggi
+                    } else {
+                      toShow = workoutsManager
+                          .getCreatedWorkouts(); // Ottiene i workout creati
+                    }
+                    filteredWorkouts = filters.filterWorkouts(toShow);
                     updateWorkouts();
                   });
                 },

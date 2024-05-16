@@ -33,7 +33,7 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
             TextButton(
               child: Text('Delete'),
               onPressed: () {
-                Provider.of<WorkoutsManager>(context)
+                Provider.of<WorkoutsManager>(context, listen: false)
                     .removeWorkout(widget.workout);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();

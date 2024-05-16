@@ -138,7 +138,11 @@ class WorkoutsManager extends ChangeNotifier {
   }
 
   void addPlannedWorkout(DateTime date, Workout workout) {
-    if (date.isBefore(DateTime.now().subtract(Duration(minutes: 1)))) {
+    int year = DateTime.now().year;
+    int month = DateTime.now().month;
+    int day = DateTime.now().day;
+    DateTime todaysDate = DateTime(year, month, day, 0, 0, 0, 0, 0);
+    if (date.isBefore(todaysDate)) {
       throw Exception('The date of the workout is in the past.');
     }
     String dateString = formatDate(date);
