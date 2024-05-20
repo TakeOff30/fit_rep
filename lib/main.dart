@@ -7,6 +7,7 @@ import 'package:fit_rep/screens/calendar_screen.dart';
 import 'package:fit_rep/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fit_rep/init.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,9 +29,7 @@ class _FitRepAppState extends State<FitRepApp> {
   @override
   void initState() {
     super.initState();
-    // _workoutsManager.loadWorkouts();
-    // _settingsManager.loadSettings();
-    // _statisticsManager.loadStatistics();
+    init();
   }
 
   int _selectedIndex = 0;

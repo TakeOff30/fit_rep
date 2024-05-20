@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fit_rep/enums.dart';
+import 'package:fit_rep/utils.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/foundation.dart';
 
@@ -35,6 +36,8 @@ class StatisticsManager extends ChangeNotifier {
   int userLevel = 1;
   int totalXPToLevelUp = 100;
   int currentXP = 0;
+  DateTime lastMonday =
+      DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
 
   Map<String, int> get weeklyCalories => _weeklyCalories;
   Map<Muscle, double> get trainedMuscles => _trainedMuscles;
@@ -124,6 +127,7 @@ class StatisticsManager extends ChangeNotifier {
   //   await prefs.setInt('userLevel', userLevel);
   //   await prefs.setInt('totalXPToLevelUp', totalXPToLevelUp);
   //   await prefs.setInt('currentXP', currentXP);
+  //   await prefs.setString('lastM');
   // }
 
   // Future<void> loadStatistics() async {

@@ -2,6 +2,7 @@ import 'package:fit_rep/config.dart';
 import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/material.dart';
+import 'package:fit_rep/utils.dart';
 
 class WorkoutsManager extends ChangeNotifier {
   List<Workout> _workouts = appWorkouts;
@@ -72,10 +73,6 @@ class WorkoutsManager extends ChangeNotifier {
     ],
   };
   final Map<String, List<Workout>> completedWorkouts = {};
-
-  String formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
-  }
 
   List<Workout> get workouts => _workouts;
   Workout? getWorkoutById(String id) => _workouts.firstWhere((w) => w.id == id);
