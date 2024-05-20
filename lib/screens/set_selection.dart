@@ -103,7 +103,8 @@ class _SetSelectionState extends State<SetSelection> {
                       } else {
                         widget.sets.add(ExerciseSet.timedSet(
                             restTime: Duration(minutes: 0, seconds: 10),
-                            executionTime: Duration(minutes: 0, seconds: 0)));
+                            executionTime: Duration(minutes: 0, seconds: 0),
+                            weight: 0));
                       }
                     });
                   },

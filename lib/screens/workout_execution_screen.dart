@@ -22,10 +22,14 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   int currentExerciseIndex = 0;
   int currentSetIndex = 0;
   Timer? _timer;
+  Timer? _preparationTimer;
   int _globalTimerCounter = 0;
-  int _start = 0; // 1:30 in seconds
+  int _preparationTimerCounter = 5;
+  int _exerciseTimerCounter = 0;
   double _percent = 1.0;
-  bool _isRunning = false;
+  bool _isRunningExercise = false;
+  bool _isRunningGlobal = true;
+  bool _isPreparationRunning = false;
   double caloriesCounter = 0;
   ExerciseSet? currentSet;
 
@@ -34,57 +38,112 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
-        if (_isRunning) _globalTimerCounter++;
+        if (_isRunningGlobal) _globalTimerCounter++;
       });
     });
+    _initializeCurrentSet();
+    _startPreparationTimer();
+  }
+
+  void _initializeCurrentSet() {
     currentSet = widget.workout.exercises.values.toList()[currentExerciseIndex]
         [currentSetIndex];
-    _start = currentSet!.executionTime.inSeconds;
+    _exerciseTimerCounter = currentSet!.executionTime.inSeconds;
+    _percent = 1.0;
   }
 
-  void startTimer() {
-    if (_isRunning) {
-      _timer?.cancel();
-      _isRunning = false;
-    } else {
-      _isRunning = true;
-      const oneSec = Duration(seconds: 1);
-      _timer = Timer.periodic(oneSec, (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-            _isRunning = false;
-            nextExercise();
-          });
-        } else {
-          setState(() {
-            _start--;
-            _percent =
-                _start / currentSet!.executionTime.inSeconds; // Update percent
-          });
+  void _startPreparationTimer() {
+    _isPreparationRunning = true;
+    _preparationTimerCounter = 5; // Reset preparation timer counter
+    _cancelTimers(); // Cancel any running timers
+    _preparationTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        if (_preparationTimerCounter > 0 && _isRunningGlobal) {
+          _preparationTimerCounter--;
+        } else if (_preparationTimerCounter == 0) {
+          _isPreparationRunning = false;
+          _isRunningExercise = true;
+          startExerciseTimer();
+          timer.cancel();
         }
       });
+    });
+  }
+
+  void startExerciseTimer() {
+    const oneSec = Duration(seconds: 1);
+    _cancelExerciseTimer();
+    if (_isRunningExercise) {
+      _timer = Timer.periodic(oneSec, (Timer timer) {
+        setState(() {
+          if (_exerciseTimerCounter == 0) {
+            _isRunningExercise = false;
+            timer.cancel();
+          } else {
+            _exerciseTimerCounter--;
+            _percent =
+                _exerciseTimerCounter / currentSet!.executionTime.inSeconds;
+          }
+        });
+      });
     }
   }
 
-  void nextExercise() {
-    if (currentExerciseIndex < widget.workout.exercises.length - 1) {
-      setState(() {
-        currentSetIndex = 0;
-        currentExerciseIndex++;
-        currentSet = widget.workout.exercises.values
-            .toList()[currentExerciseIndex][currentSetIndex];
-        _start = currentSet!.executionTime.inSeconds;
-      });
-    } else {
-      // End of workout
-      print('Workout ended');
-    }
+  void _cancelTimers() {
+    _preparationTimer?.cancel();
+    _timer?.cancel();
+  }
+
+  void _cancelExerciseTimer() {
+    _timer?.cancel();
+  }
+
+  void nextSetOrExercise() {
+    setState(() {
+      if (currentSetIndex <
+          widget.workout.exercises.values
+                  .toList()[currentExerciseIndex]
+                  .length -
+              1) {
+        currentSetIndex++;
+      } else {
+        if (currentExerciseIndex < widget.workout.exercises.length - 1) {
+          currentSetIndex = 0;
+          currentExerciseIndex++;
+        } else {
+          // End of workout
+          print('Workout ended');
+          return;
+        }
+      }
+      _initializeCurrentSet();
+      _startPreparationTimer();
+    });
+  }
+
+  void togglePlayPause() {
+    setState(() {
+      _isRunningGlobal = !_isRunningGlobal;
+      if (_isPreparationRunning) {
+        // Pause or resume the preparation timer
+        if (_preparationTimer != null && _preparationTimer!.isActive) {
+          _preparationTimer!.cancel();
+        } else {
+          _startPreparationTimer();
+        }
+      } else if (_isRunningExercise) {
+        if (_timer != null && _timer!.isActive) {
+          _timer!.cancel();
+        } else {
+          startExerciseTimer();
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _cancelTimers();
     super.dispose();
   }
 
@@ -130,15 +189,13 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              (
-                      //currentSet!.isTimed
-                      true)
+              (currentSet!.isTimed)
                   ? CircularPercentIndicator(
                       radius: 150.0,
                       lineWidth: 20.0,
                       percent: _percent,
                       center: Text(
-                        "${(_start ~/ 60).toString().padLeft(2, '0')}:${(_start % 60).toString().padLeft(2, '0')}",
+                        formatTime(_exerciseTimerCounter),
                         style: TextStyle(
                             fontSize: 40.0,
                             color: (settingsManager.isDarkMode)
@@ -200,15 +257,16 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FloatingActionButton(
-                      onPressed: startTimer,
-                      tooltip: _isRunning ? 'Pause Timer' : 'Start Timer',
-                      child: Icon(Icons.pause, color: Colors.green, size: 40),
+                      onPressed: togglePlayPause,
+                      child: Icon(
+                          (_isRunningGlobal) ? Icons.pause : Icons.play_arrow,
+                          color: Colors.green,
+                          size: 40),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
                     ),
                     FloatingActionButton(
-                      onPressed: startTimer,
-                      tooltip: _isRunning ? 'Pause Timer' : 'Start Timer',
+                      onPressed: nextSetOrExercise,
                       child: Icon(Icons.check, color: Colors.green, size: 40),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
@@ -254,7 +312,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'Total time: $_globalTimerCounter',
+                        'Total time:${formatTime(_globalTimerCounter)}',
                         style: TextStyle(
                             color: const Color.fromARGB(255, 0, 0, 0),
                             fontSize: 16),

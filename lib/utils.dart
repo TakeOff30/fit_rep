@@ -7,6 +7,10 @@ String formatDate(DateTime date) {
   return '${date.day}/${date.month}/${date.year}';
 }
 
+String formatTime(int seconds){
+  return '${(seconds ~/ 60).toString().padLeft(2, '0')}:${(seconds % 60).toString().padLeft(2, '0')}';
+}
+
 double exerciseCaloriesBurned(
     Exercise exercise, List<ExerciseSet> sets, int weight) {
   double exerciseCalories = 0;

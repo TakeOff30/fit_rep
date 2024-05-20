@@ -89,12 +89,14 @@ List<Exercise> fitRepExercises = [
 List<Workout> appWorkouts = [
   Workout('Chest Day', {
     fitRepExercises[0]: [
+      ExerciseSet.timedSet(
+          executionTime: Duration(minutes: 0, seconds: 10), restTime: Duration(minutes: 0, seconds: 10), weight: 10),
       ExerciseSet.repsSet(
           reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
-      ExerciseSet.repsSet(
-          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
-      ExerciseSet.repsSet(
-          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.timedSet(
+          executionTime: Duration(minutes: 0, seconds: 10), restTime: Duration(minutes: 0, seconds: 10), weight: 10),
+      ExerciseSet.timedSet(
+          executionTime: Duration(minutes: 0, seconds: 10), restTime: Duration(minutes: 0, seconds: 10), weight: 10),
     ],
     fitRepExercises[1]: [
       ExerciseSet.repsSet(
@@ -107,8 +109,8 @@ List<Workout> appWorkouts = [
           reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
       ExerciseSet.repsSet(
           reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
-      ExerciseSet.repsSet(
-          reps: 10, weight: 135, restTime: Duration(minutes: 0, seconds: 10)),
+      ExerciseSet.timedSet(
+          executionTime: Duration(minutes: 0, seconds: 10), restTime: Duration(minutes: 0, seconds: 10), weight: 10),
     ],
   }),
   Workout('Back Day', {
