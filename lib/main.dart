@@ -29,7 +29,7 @@ class _FitRepAppState extends State<FitRepApp> {
   @override
   void initState() {
     super.initState();
-    init();
+    //init();
   }
 
   int _selectedIndex = 0;

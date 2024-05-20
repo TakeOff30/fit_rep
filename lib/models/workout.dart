@@ -35,8 +35,10 @@ class Workout {
       double exerciseCalories = 0;
       for (var exeSet in sets) {
         if (exeSet.isTimed) {
-          exerciseCalories +=
-              exercise.metValue * exeSet.executionTime.inSeconds * 3.5 * userWeight;
+          exerciseCalories += exercise.metValue *
+              exeSet.executionTime.inSeconds *
+              3.5 *
+              userWeight;
         } else {
           exerciseCalories += 0.025 *
               exeSet.weight *
@@ -91,4 +93,10 @@ class PlannedWorkout extends Workout {
   }
 
   PlannedWorkout(workout, this.date) : super(workout.name, workout.exercises);
+
+  bool isToday() {
+    return DateTime.now().day == date.day &&
+        DateTime.now().month == date.month &&
+        DateTime.now().year == date.year;
+  }
 }

@@ -15,7 +15,7 @@ class WorkoutCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 155,
+      height: 160,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -84,6 +84,7 @@ class WorkoutCard extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () {
+                      print(workout);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

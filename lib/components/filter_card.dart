@@ -115,7 +115,7 @@ class _FilterCardState extends State<FilterCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: EdgeInsets.only(left: 5),
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,8 +123,13 @@ class _FilterCardState extends State<FilterCard> {
                         Expanded(
                           child: TextField(
                             controller: workoutNameController,
-                            decoration:
-                                InputDecoration(hintText: 'Workout name'),
+                            decoration: InputDecoration(
+                              hintText: 'Workout name',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
                             onChanged: (value) {
                               setState(() {
                                 widget.filter.workoutNameFilter = value;
@@ -168,7 +173,7 @@ class _FilterCardState extends State<FilterCard> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10),
+                    margin: EdgeInsets.only(left: 5),
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -157,6 +157,7 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: ElevatedButton(
               onPressed: () {
+                print(widget.date);
                 if (widget.toModify != null) {
                   workoutsProvider.modifyWorkout(widget.toModify!, workout);
                   Navigator.of(context).pop();

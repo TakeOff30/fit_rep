@@ -42,7 +42,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 setState(() {
                   //_selectedDay = DateTime(selectedDay.year, selectedDay.month, selectedDay.day, 23, 59, 59);
                   _selectedDay = selectedDay;
-                  print(_selectedDay);
                   _selectedDayWorkouts =
                       workoutsManager.getWorkoutsByDay(selectedDay);
                 });

@@ -7,28 +7,28 @@ import 'package:fit_rep/utils.dart';
 class WorkoutsManager extends ChangeNotifier {
   List<Workout> _workouts = appWorkouts;
   final Map<String, List<Workout>> plannedWorkouts = {
-    '15/5/2024': [
+    '25/5/2024': [
       PlannedWorkout(
           Workout(
             'Full Body Workout',
             {},
           ),
-          DateTime(2024, 5, 15, 10, 0, 0, 0, 0)),
+          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
       PlannedWorkout(
           Workout(
             'Full Body Workout',
             {},
           ),
-          DateTime(2024, 5, 15, 10, 0, 0, 0, 0)),
+          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
       PlannedWorkout(
           Workout(
             'Full Body Workout',
             {},
           ),
-          DateTime(2024, 5, 15, 10, 0, 0, 0, 0)),
+          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
     ],
     '13/5/2024': [
-      PlannedWorkout(
+      CompletedWorkout(
           Workout('Today 1', {
             fitRepExercises[0]: [
               ExerciseSet.repsSet(
@@ -69,10 +69,103 @@ class WorkoutsManager extends ChangeNotifier {
                   restTime: Duration(minutes: 0, seconds: 10)),
             ],
           }),
-          DateTime(2024, 5, 13, 10, 0, 0, 0, 0))
+          DateTime(2024, 5, 13, 10, 0, 0, 0, 0),
+          500,
+          Duration(minutes: 60)),
     ],
   };
-  final Map<String, List<Workout>> completedWorkouts = {};
+  final Map<String, List<Workout>> completedWorkouts = {
+    '5/5/2024': [
+      CompletedWorkout(
+          Workout('Completed 1', {
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+            fitRepExercises[1]: [
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+            ],
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+          }),
+          DateTime.utc(2024, 5, 5),
+          500,
+          Duration(minutes: 60)),
+      CompletedWorkout(
+          Workout('Completed 2', {
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+            fitRepExercises[1]: [
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+            ],
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+          }),
+          DateTime.utc(2024, 4, 20),
+          500,
+          Duration(minutes: 60)),
+    ],
+  };
 
   List<Workout> get workouts => _workouts;
   Workout? getWorkoutById(String id) => _workouts.firstWhere((w) => w.id == id);
@@ -99,8 +192,21 @@ class WorkoutsManager extends ChangeNotifier {
   }
 
   void removeWorkout(Workout workout) {
-    _workouts.remove(workout);
-    notifyListeners();
+    print(plannedWorkouts.length);
+    if (workout is PlannedWorkout) {
+      print('removing');
+      plannedWorkouts[formatDate(workout.date)]?.remove(workout);
+      notifyListeners();
+      return;
+    } else if (workout is CompletedWorkout) {
+      completedWorkouts[formatDate(workout.date)]?.remove(workout);
+      notifyListeners();
+      return;
+    } else {
+      _workouts.remove(workout);
+      notifyListeners();
+    }
+    print(plannedWorkouts.length);
   }
 
   void updateWorkout(Workout workout) {
@@ -143,10 +249,11 @@ class WorkoutsManager extends ChangeNotifier {
       throw Exception('The date of the workout is in the past.');
     }
     String dateString = formatDate(date);
+    PlannedWorkout toAdd = PlannedWorkout(workout, date);
     if (plannedWorkouts.containsKey(dateString)) {
-      plannedWorkouts[dateString]!.add(workout);
+      plannedWorkouts[dateString]!.add(toAdd);
     } else {
-      plannedWorkouts[dateString] = [workout];
+      plannedWorkouts[dateString] = [toAdd];
     }
     notifyListeners();
   }
