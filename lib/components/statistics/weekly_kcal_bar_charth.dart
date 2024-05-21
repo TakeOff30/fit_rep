@@ -1,11 +1,11 @@
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
 
-// Gradient color for the bars in the bar chart
 class AppColors {
-  static Color primaryColor = Color(0xFF39FF14); // Green color
+  static Color primaryColor = Color(0xFF39FF14);
 }
 
 LinearGradient get _barsGradient => LinearGradient(
@@ -37,6 +37,7 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
   @override
   Widget build(BuildContext context) {
     var _statisticsProvider = Provider.of<StatisticsManager>(context);
+    var settingsProvider = Provider.of<SettingsManager>(context);
     return SizedBox(
       height: 200,
       width: 400,
@@ -44,7 +45,6 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
         padding: const EdgeInsets.symmetric(horizontal: 0),
         child: BarChart(
           BarChartData(
-            // Barchart configuration
             barGroups: getBarGroups(
                 _statisticsProvider.weeklyCalories.values.toList()),
             gridData: FlGridData(show: false),
@@ -100,10 +100,15 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
                   return BarTooltipItem(
                     rod.toY.toString() + ' kcal',
                     TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Roboto',
-                        color: Colors.white),
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize,
+                        fontWeight:
+                            Theme.of(context).textTheme.bodyMedium!.fontWeight,
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyMedium!.fontFamily,
+                        color: settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColorDark),
                   );
                 },
                 getTooltipColor: (group) => Colors.transparent,
@@ -116,14 +121,13 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
     );
   }
 
-  // Generate the bar groups for the bar chart
   List<BarChartGroupData> getBarGroups(List<int> values) =>
       List.generate(values.length, (index) {
         return BarChartGroupData(
           x: index,
           barRods: [
             BarChartRodData(
-                toY: values[index].toDouble(), // Sample data
+                toY: values[index].toDouble(),
                 gradient: selectedBarIndex == index ? _barsGradient : null,
                 color: selectedBarIndex == index
                     ? Colors.transparent

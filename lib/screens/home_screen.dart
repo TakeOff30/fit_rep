@@ -12,8 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIcon = 3; // Default selection for "Weekly kcal"
-  int? selectedBarIndex; // Variable to keep track of the selected bar
+  int _selectedIcon = 3; // Variable to keep track of the selected icon
+  int? selectedBarIndex; // Variable to keep track of the selected bar index
 
   List<Muscle> mostTrainedMuscles() {
     var statisticsProvider = Provider.of<StatisticsManager>(context);
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var _statisticsProvider = Provider.of<StatisticsManager>(context);
     var _settingsProvider = Provider.of<SettingsManager>(context);
+    final settingsProvider = Provider.of<SettingsManager>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -51,8 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 300,
                   height: 260,
                   decoration: BoxDecoration(
-                    border:
-                        Border.all(color: const Color(0xFFC0C0C0), width: 2),
+                    border: Border.all(
+                        color: settingsProvider.isDarkMode
+                            ? Color.fromARGB(255, 192, 192, 192)
+                            : Color.fromARGB(255, 74, 74, 74),
+                        width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -177,31 +181,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Build the icon button
+// Build the icon button
   Widget _iconButton(int id, IconData icon, String label) {
     bool isSelected = _selectedIcon == id;
     return Column(
       children: <Widget>[
-        IconButton(
-          icon: Icon(icon, size: 40),
-          color: isSelected
-              ? Theme.of(context).primaryColor
-              : const Color(0xFFC0C0C0),
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             setState(() {
               _selectedIcon = _selectedIcon == id ? 0 : id;
             });
           },
-        ),
-        if (isSelected)
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Roboto',
-            ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                size: 40,
+                color: isSelected
+                    ? Color.fromARGB(255, 80, 200, 120)
+                    : Color.fromARGB(255, 192, 192, 192),
+              ),
+              if (isSelected)
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Roboto',
+                  ),
+                ),
+            ],
           ),
+        ),
       ],
     );
   }
@@ -209,15 +220,24 @@ class _HomeScreenState extends State<HomeScreen> {
   // Build the icon section
   Widget _buildIconSection(
       IconData icon, String label, bool borderRight, bool borderBottom) {
+    final settingsProvider = Provider.of<SettingsManager>(context);
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
           border: Border(
             right: borderRight
-                ? const BorderSide(width: 2, color: Color(0xFFC0C0C0))
+                ? BorderSide(
+                    width: 2,
+                    color: settingsProvider.isDarkMode
+                        ? Color.fromARGB(255, 192, 192, 192)
+                        : Color.fromARGB(255, 74, 74, 74))
                 : BorderSide.none,
             bottom: borderBottom
-                ? const BorderSide(width: 2, color: Color(0xFFC0C0C0))
+                ? BorderSide(
+                    width: 2,
+                    color: settingsProvider.isDarkMode
+                        ? Color.fromARGB(255, 192, 192, 192)
+                        : Color.fromARGB(255, 74, 74, 74))
                 : BorderSide.none,
           ),
         ),

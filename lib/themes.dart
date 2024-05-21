@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 Color primaryColor = Color.fromARGB(255, 80, 200, 120);
 Color darkColor = Color.fromARGB(255, 30, 30, 30);
 Color lightColor = Color.fromARGB(255, 246, 246, 246);
+Color lightGrey = Color.fromARGB(255, 192, 192, 192);
+Color darkGrey = Color.fromARGB(255, 74, 74, 74);
 
 class FitRepTheme {
   static ThemeData light() {
@@ -57,29 +59,35 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineMedium: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineSmall: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         bodyLarge: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 16,
           color: darkColor,
         ),
         bodyMedium: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 14,
           color: darkColor,
         ),
         bodySmall: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 12,
           color: darkColor,
         ),
@@ -146,29 +154,35 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         headlineMedium: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         headlineSmall: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         bodyLarge: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 16,
           color: lightColor,
         ),
         bodyMedium: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 14,
           color: lightColor,
         ),
         bodySmall: TextStyle(
+          fontFamily: 'Roboto',
           fontSize: 12,
           color: lightColor,
         ),

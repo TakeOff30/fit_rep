@@ -8,8 +8,9 @@ import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/workout_termination_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
-
+import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutExecutionScreen extends StatefulWidget {
@@ -36,10 +37,21 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   bool _isPreparationRunning = false;
   double caloriesCounter = 0;
   ExerciseSet? currentSet;
+  final playerStart = AudioPlayer();
+  final playerDoneExercise = AudioPlayer();
+  late AudioPlayer player = AudioPlayer();
+  late AudioPlayer player2 = AudioPlayer();
+  FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
     super.initState();
+    player.setAsset('assets/sounds/notification.mp3');
+    player.play();
+    player2.setAsset('assets/sounds/done.mp3');
+    flutterTts.setLanguage("en-US");
+    flutterTts.setSpeechRate(1.0);
+    flutterTts.setVolume(1.0);
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       print('Global timer running');
       if (mounted) {
@@ -87,6 +99,8 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           if (_exerciseTimerCounter == 0) {
             _isRunningExercise = false;
             timer.cancel();
+            player2.play();
+            player2.seek(Duration.zero);
           } else {
             _exerciseTimerCounter--;
             _percent =
@@ -115,10 +129,16 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                   .length -
               1) {
         currentSetIndex++;
+        player2.play();
+        player2.seek(Duration.zero);
       } else {
         if (currentExerciseIndex < widget.workout.exercises.length - 1) {
           currentSetIndex = 0;
           currentExerciseIndex++;
+          flutterTts.speak(
+              'Next exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
+          player2.play();
+          player2.
         } else {
           CompletedWorkout completedWorkout = CompletedWorkout(
             widget.workout,
@@ -128,6 +148,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           );
           Provider.of<WorkoutsManager>(context, listen: false)
               .addCompletedWorkout(DateTime.now(), completedWorkout);
+
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return WorkoutTerminationScreen(
               completedWorkout: completedWorkout,
