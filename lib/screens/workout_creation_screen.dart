@@ -3,6 +3,7 @@ import 'package:fit_rep/config.dart';
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
@@ -45,6 +46,7 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
   @override
   Widget build(BuildContext context) {
     var workoutsProvider = Provider.of<WorkoutsManager>(context);
+    var settingsManager = Provider.of<SettingsManager>(context);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -74,20 +76,8 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
                         workout.name = value;
                       });
                     },
-                    style:
-                        TextStyle(color: const Color.fromARGB(255, 14, 13, 13)),
                     decoration: InputDecoration(
                       hintText: 'Workout name',
-                      hintStyle:
-                          TextStyle(color: Color.fromARGB(179, 19, 19, 19)),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 20, 20, 20)),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 20, 19, 19)),
-                      ),
                     ),
                   ),
                   SizedBox(height: 50),
@@ -97,9 +87,7 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
                       Text(
                         ' %d Exercises'.replaceAll(
                             '%d', workout.exercises.length.toString()),
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 15, 14, 14),
-                            fontSize: 18),
+                        style: TextStyle(fontSize: 18),
                       ),
                       IconButton(
                         icon: Icon(Icons.add, color: Color(0xFF39FF14)),
@@ -173,7 +161,9 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
               child: Text(
                 'Save',
                 style: TextStyle(
-                    color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF39FF14),

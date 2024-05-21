@@ -1,6 +1,8 @@
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/models/exercise_set.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExerciseListElement extends StatelessWidget {
   final Exercise exercise;
@@ -19,6 +21,7 @@ class ExerciseListElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var settingsManager = Provider.of<SettingsManager>(context);
     return Container(
         margin: EdgeInsets.all(8.0),
         width: double.infinity,
@@ -43,7 +46,9 @@ class ExerciseListElement extends StatelessWidget {
                 width: 10,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: (settingsManager.isDarkMode)
+                      ? Colors.white
+                      : Colors.black,
                   shape: BoxShape.circle,
                 ),
               ),

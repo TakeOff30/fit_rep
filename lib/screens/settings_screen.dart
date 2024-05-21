@@ -8,6 +8,26 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  TextEditingController _heightController = TextEditingController();
+  TextEditingController _weightController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    var settingsProvider = Provider.of<SettingsManager>(context, listen: false);
+    _heightController =
+        TextEditingController(text: settingsProvider.height.toString());
+    _weightController =
+        TextEditingController(text: settingsProvider.weight.toString());
+  }
+
+  @override
+  void dispose() {
+    _heightController.dispose();
+    _weightController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingsManager>(context);
@@ -107,8 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               suffixIconConstraints:
                                   BoxConstraints(minWidth: 0, minHeight: 0),
                             ),
-                            onChanged: (value) =>
-                                settingsProvider.setHeight(int.parse(value)),
+                            controller: _heightController,
                           ),
                         ),
                       ],
@@ -141,8 +160,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               suffixIconConstraints:
                                   BoxConstraints(minWidth: 0, minHeight: 0),
                             ),
-                            onChanged: (value) =>
-                                settingsProvider.setWeight(int.parse(value)),
+                            controller: _weightController,
                           ),
                         ),
                       ],
@@ -167,11 +185,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value: settingsProvider.weeklyWorkoutGoal,
                       icon: const Icon(Icons.arrow_drop_down),
                       elevation: 16,
-                      style: TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 1,
-                        color: Colors.deepPurpleAccent,
-                      ),
+                      style: TextStyle(
+                          color: (settingsProvider.isDarkMode)
+                              ? Colors.white
+                              : Colors.black),
                       onChanged: (int? newValue) {
                         settingsProvider.setWeeklyWorkoutGoal(newValue!);
                       },
