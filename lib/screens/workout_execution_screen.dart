@@ -1,7 +1,13 @@
+import 'package:fit_rep/components/calories_timer_section.dart';
+import 'package:fit_rep/components/control_buttons.dart';
+import 'package:fit_rep/components/exercise_info_section.dart';
+import 'package:fit_rep/components/reps_weight_info_section.dart';
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
+import 'package:fit_rep/providers/workouts_manager.dart';
+import 'package:fit_rep/screens/workout_termination_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:fit_rep/utils.dart';
@@ -21,6 +27,7 @@ class WorkoutExecutionScreen extends StatefulWidget {
 class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   int currentExerciseIndex = 0;
   int currentSetIndex = 0;
+  Timer? _globalTimer;
   Timer? _timer;
   Timer? _preparationTimer;
   int _globalTimerCounter = 0;
@@ -37,10 +44,14 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   void initState() {
     super.initState();
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        if (_isRunningGlobal) _globalTimerCounter++;
-      });
+      print('Global timer running');
+      if (mounted) {
+        setState(() {
+          if (_isRunningGlobal) _globalTimerCounter++;
+        });
+      }
     });
+
     _initializeCurrentSet();
     _startPreparationTimer();
   }
@@ -91,6 +102,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
 
   void _cancelTimers() {
     _preparationTimer?.cancel();
+    _globalTimer?.cancel();
     _timer?.cancel();
   }
 
@@ -111,9 +123,19 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           currentSetIndex = 0;
           currentExerciseIndex++;
         } else {
-          // End of workout
-          print('Workout ended');
-          return;
+          CompletedWorkout completedWorkout = CompletedWorkout(
+            widget.workout,
+            DateTime.now(),
+            caloriesCounter.toInt(),
+            Duration(seconds: _globalTimerCounter),
+          );
+          Provider.of<WorkoutsManager>(context, listen: false)
+              .addCompletedWorkout(DateTime.now(), completedWorkout);
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return WorkoutTerminationScreen(
+              completedWorkout: completedWorkout,
+            );
+          }));
         }
       }
       _initializeCurrentSet();
@@ -171,156 +193,60 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                children: [
-                  Text(
-                    'Exercise ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Exercise ${currentExerciseIndex + 1}/${widget.workout.exercises.length}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Text(
-                    'Set ${currentSetIndex + 1}/${widget.workout.exercises.values.toList()[currentExerciseIndex].length}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ],
+              ExerciseInfoSection(
+                exerciseName: widget.workout.exercises.keys
+                    .toList()[currentExerciseIndex]
+                    .name,
+                currentExerciseIndex: currentExerciseIndex,
+                totalExercises: widget.workout.exercises.length,
+                currentSetIndex: currentSetIndex,
+                totalSets: widget.workout.exercises.values
+                    .toList()[currentExerciseIndex]
+                    .length,
               ),
               const SizedBox(height: 10),
               (currentSet!.isTimed)
-                  ? CircularPercentIndicator(
-                      radius: 150.0,
-                      lineWidth: 20.0,
-                      percent: _percent,
-                      center: Text(
-                        formatTime(_exerciseTimerCounter),
-                        style: TextStyle(
-                            fontSize: 40.0,
-                            color: (settingsManager.isDarkMode)
-                                ? Colors.white
-                                : Colors.black),
-                      ),
-                      progressColor: Colors.green,
-                      backgroundColor: Colors.grey,
-                      circularStrokeCap: CircularStrokeCap.round,
-                    )
+                  ? (!_isPreparationRunning)
+                      ? CircularPercentIndicator(
+                          radius: 150.0,
+                          lineWidth: 20.0,
+                          percent: _percent,
+                          center: Text(
+                            formatTime(_exerciseTimerCounter),
+                            style: TextStyle(
+                                fontSize: 40.0,
+                                color: (settingsManager.isDarkMode)
+                                    ? Colors.white
+                                    : Colors.black),
+                          ),
+                          progressColor: Colors.green,
+                          backgroundColor: Colors.grey,
+                          circularStrokeCap: CircularStrokeCap.round,
+                        )
+                      : Text(
+                          'Get ready in $_preparationTimerCounter seconds',
+                          style: TextStyle(fontSize: 24),
+                        )
                   : Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Reps',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                currentSet!.reps.toString(),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                'Weight',
-                                style: TextStyle(
-                                    fontSize: 24, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                currentSet!.weight.toString(),
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: RepsAndWeightInfoSection(
+                        reps: currentSet!.reps,
+                        weight: currentSet!.weight,
                       ),
                     ),
               const SizedBox(height: 20), // Spacing below the timer
-              Container(
-                height: 60,
-                width: 250,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 0, 0, 0), width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FloatingActionButton(
-                      onPressed: togglePlayPause,
-                      child: Icon(
-                          (_isRunningGlobal) ? Icons.pause : Icons.play_arrow,
-                          color: Colors.green,
-                          size: 40),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                    ),
-                    FloatingActionButton(
-                      onPressed: nextSetOrExercise,
-                      child: Icon(Icons.check, color: Colors.green, size: 40),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                    ),
-                  ],
-                ),
+              ControlButtons(
+                togglePlayPause: () {
+                  togglePlayPause();
+                },
+                nextSetOrExercise: () {
+                  nextSetOrExercise();
+                },
+                isRunningGlobal: _isRunningGlobal,
               ),
-
               SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width * .4,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Burned: $caloriesCounter kcal',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 16),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width * .4,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Total time:${formatTime(_globalTimerCounter)}',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              CaloriesTimerSection(
+                  globalTimerCounter: _globalTimerCounter,
+                  caloriesBurned: caloriesCounter.toInt()),
             ],
           ),
         ),

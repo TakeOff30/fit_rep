@@ -264,10 +264,11 @@ class WorkoutsManager extends ChangeNotifier {
     }
     String dateString = formatDate(date);
     if (workout is PlannedWorkout) plannedWorkouts[dateString]?.remove(workout);
+
     if (completedWorkouts.containsKey(dateString)) {
-      completedWorkouts[dateString]!.add(workout);
+      completedWorkouts[dateString]!.add(workout as CompletedWorkout);
     } else {
-      completedWorkouts[dateString] = [workout];
+      completedWorkouts[dateString] = [workout as CompletedWorkout];
     }
     notifyListeners();
   }
