@@ -1,16 +1,13 @@
-import 'package:fit_rep/components/calories_timer_section.dart';
-import 'package:fit_rep/components/control_buttons.dart';
-import 'package:fit_rep/components/exercise_info_section.dart';
-import 'package:fit_rep/components/reps_weight_info_section.dart';
-import 'package:fit_rep/models/exercise.dart';
+import 'package:fit_rep/components/workout_execution/calories_timer_section.dart';
+import 'package:fit_rep/components/workout_execution/control_buttons.dart';
+import 'package:fit_rep/components/workout_execution/execution_section.dart';
+import 'package:fit_rep/components/workout_execution/exercise_info_section.dart';
 import 'package:fit_rep/models/exercise_set.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/workout_termination_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:fit_rep/utils.dart';
 import 'dart:async';
 
 import 'package:provider/provider.dart';
@@ -205,34 +202,16 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                     .length,
               ),
               const SizedBox(height: 10),
-              (currentSet!.isTimed)
-                  ? (!_isPreparationRunning)
-                      ? CircularPercentIndicator(
-                          radius: 150.0,
-                          lineWidth: 20.0,
-                          percent: _percent,
-                          center: Text(
-                            formatTime(_exerciseTimerCounter),
-                            style: TextStyle(
-                                fontSize: 40.0,
-                                color: (settingsManager.isDarkMode)
-                                    ? Colors.white
-                                    : Colors.black),
-                          ),
-                          progressColor: Colors.green,
-                          backgroundColor: Colors.grey,
-                          circularStrokeCap: CircularStrokeCap.round,
-                        )
-                      : Text(
-                          'Get ready in $_preparationTimerCounter seconds',
-                          style: TextStyle(fontSize: 24),
-                        )
-                  : Container(
-                      child: RepsAndWeightInfoSection(
-                        reps: currentSet!.reps,
-                        weight: currentSet!.weight,
-                      ),
-                    ),
+              ExecutionSection(
+                isTimed: currentSet!.isTimed,
+                isPreparationRunning: _isPreparationRunning,
+                percent: _percent,
+                exerciseTimerCounter: _exerciseTimerCounter,
+                preparationTimerCounter: _preparationTimerCounter,
+                isDarkMode: settingsManager.isDarkMode,
+                reps: currentSet!.reps,
+                weight: currentSet!.weight.toDouble(),
+              ),
               const SizedBox(height: 20), // Spacing below the timer
               ControlButtons(
                 togglePlayPause: () {

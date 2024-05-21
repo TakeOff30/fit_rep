@@ -1,5 +1,5 @@
-import 'package:fit_rep/components/exercise_list_element.dart';
-import 'package:fit_rep/components/set_card.dart';
+import 'package:fit_rep/components/generics/exercise_list_element.dart';
+import 'package:fit_rep/components/generics/set_card.dart';
 import 'package:fit_rep/config.dart';
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/models/exercise_set.dart';

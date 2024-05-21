@@ -1,5 +1,5 @@
-import 'package:fit_rep/components/calendar_modal.dart';
-import 'package:fit_rep/components/exercise_list_element.dart';
+import 'package:fit_rep/components/generics/calendar_modal.dart';
+import 'package:fit_rep/components/generics/exercise_list_element.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/screens/workout_creation_screen.dart';
 import 'package:fit_rep/screens/workout_execution_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:fit_rep/components/workout_card.dart';
+import 'package:fit_rep/components/generics/workout_card.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:flutter/material.dart';

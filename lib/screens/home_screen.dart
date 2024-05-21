@@ -2,8 +2,8 @@ import 'package:fit_rep/enums.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:fit_rep/components/weekly_kcal_bar_charth.dart';
-import 'package:fit_rep/components/level_bar.dart';
+import 'package:fit_rep/components/statistics/weekly_kcal_bar_charth.dart';
+import 'package:fit_rep/components/statistics/level_bar.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
