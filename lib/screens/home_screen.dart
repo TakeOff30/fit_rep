@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     border: Border.all(
                         color: settingsProvider.isDarkMode
                             ? Color.fromARGB(255, 192, 192, 192)
-                            : Color.fromARGB(255, 74, 74, 74),
+                            : Color.fromARGB(255, 192, 192, 192),
                         width: 2),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -230,14 +230,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 2,
                     color: settingsProvider.isDarkMode
                         ? Color.fromARGB(255, 192, 192, 192)
-                        : Color.fromARGB(255, 74, 74, 74))
+                        : Color.fromARGB(255, 192, 192, 192))
                 : BorderSide.none,
             bottom: borderBottom
                 ? BorderSide(
                     width: 2,
                     color: settingsProvider.isDarkMode
                         ? Color.fromARGB(255, 192, 192, 192)
-                        : Color.fromARGB(255, 74, 74, 74))
+                        : Color.fromARGB(255, 192, 192, 192))
                 : BorderSide.none,
           ),
         ),

@@ -138,7 +138,6 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           flutterTts.speak(
               'Next exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
           player2.play();
-          player2.
         } else {
           CompletedWorkout completedWorkout = CompletedWorkout(
             widget.workout,

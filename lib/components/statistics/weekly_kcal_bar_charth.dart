@@ -5,7 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
 
 class AppColors {
-  static Color primaryColor = Color(0xFF39FF14);
+  static Color primaryColor = Color.fromARGB(255, 80, 200, 120);
 }
 
 LinearGradient get _barsGradient => LinearGradient(
@@ -74,6 +74,9 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Roboto',
                           fontSize: 14,
+                          color: settingsProvider.isDarkMode
+                              ? Theme.of(context).primaryColorLight
+                              : Theme.of(context).primaryColorDark,
                         ),
                       ),
                     );
