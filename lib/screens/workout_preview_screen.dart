@@ -48,7 +48,6 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
   }
 
   bool checkShowStart() {
-    //print((widget.workout as PlannedWorkout).isToday());
     if (widget.workout is CompletedWorkout) {
       return false;
     } else if (widget.workout is PlannedWorkout &&
@@ -61,7 +60,6 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.workout);
     return Consumer<WorkoutsManager>(builder: (context, value, child) {
       return Scaffold(
         appBar: AppBar(
@@ -85,12 +83,18 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
                   _showDeleteConfirmationDialog();
                 } else if (value == 'plan') {
                   showDialog(
-                      context: context,
-                      builder: (context) =>
-                          CalendarModal(onSelectedDate: (DateTime date) {
-                            Provider.of<WorkoutsManager>(context)
-                                .addPlannedWorkout(date, widget.workout);
-                          }));
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CalendarModal(
+                        onSelectedDate: (DateTime date) {
+                          Provider.of<WorkoutsManager>(context, listen: false)
+                              .addPlannedWorkout(date, widget.workout);
+                          Navigator.of(context).pop();
+                          print("Selected date: $date");
+                        },
+                      );
+                    },
+                  );
                 }
               },
               itemBuilder: (BuildContext context) {

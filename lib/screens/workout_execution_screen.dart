@@ -47,14 +47,16 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   @override
   void initState() {
     super.initState();
+    var settingsManager = Provider.of<SettingsManager>(context, listen: false);
     player.setAsset('assets/sounds/notification.mp3');
-    player.play();
+    if (settingsManager.isSoundEnabled) player.play();
     player2.setAsset('assets/sounds/done.mp3');
     flutterTts.setLanguage("en-US");
     flutterTts.setSpeechRate(1.0);
     flutterTts.setVolume(1.0);
-    flutterTts.speak(
-        'The first exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
+    if (settingsManager.isSoundEnabled)
+      flutterTts.speak(
+          'The first exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       if (mounted) {
         setState(() {
@@ -93,6 +95,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   }
 
   void startExerciseTimer() {
+    var settingsManager = Provider.of<SettingsManager>(context, listen: false);
     const oneSec = Duration(seconds: 1);
     _cancelExerciseTimer();
     if (_isRunningExercise) {
@@ -101,7 +104,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           if (_exerciseTimerCounter == 0) {
             _isRunningExercise = false;
             timer.cancel();
-            player2.play();
+            if (settingsManager.isSoundEnabled) player2.play();
             player2.setAsset('assets/sounds/done.mp3');
           } else {
             _exerciseTimerCounter--;
@@ -124,6 +127,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   }
 
   void nextSetOrExercise() {
+    var settingsManager = Provider.of<SettingsManager>(context, listen: false);
     setState(() {
       if (currentSetIndex <
           widget.workout.exercises.values
@@ -131,7 +135,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                   .length -
               1) {
         currentSetIndex++;
-        player2.play();
+        if (settingsManager.isSoundEnabled) player2.play();
         player2.setAsset('assets/sounds/done.mp3');
       } else {
         if (currentExerciseIndex < widget.workout.exercises.length - 1) {
@@ -143,7 +147,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
               Provider.of<SettingsManager>(context, listen: false).weight);
           flutterTts.speak(
               'Next exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
-          player2.play();
+          if (settingsManager.isSoundEnabled) player2.play();
           player2.setAsset('assets/sounds/done.mp3');
         } else {
           CompletedWorkout completedWorkout = CompletedWorkout(

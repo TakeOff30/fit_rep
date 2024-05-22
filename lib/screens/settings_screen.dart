@@ -75,9 +75,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Text('Sounds', style: Theme.of(context).textTheme.bodyLarge),
                 Switch(
                   activeColor: Theme.of(context).primaryColor,
-                  value: settingsProvider.isNotificationEnabled,
+                  value: settingsProvider.isSoundEnabled,
                   onChanged: (value) {
-                    settingsProvider.toggleNotification();
+                    settingsProvider.toggleSound();
                   },
                 ),
               ],

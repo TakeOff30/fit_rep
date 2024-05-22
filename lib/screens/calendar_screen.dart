@@ -1,3 +1,4 @@
+import 'package:fit_rep/components/generics/calendar_tutorial.dart';
 import 'package:fit_rep/components/generics/workout_card.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
@@ -30,13 +31,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Workouts Log',
-            style: TextStyle(
-                fontFamily: 'Roboto',
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
-          ),
+          title: Text('Calendar',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Kanit',
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.info,
+                color: settingsProvider.isDarkMode
+                    ? Theme.of(context).primaryColorLight
+                    : Theme.of(context).primaryColorDark,
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context, builder: (context) => CalendarTutorial());
+              },
+            ),
+          ],
         ),
         body: Column(
           children: [

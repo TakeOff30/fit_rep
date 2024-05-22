@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-Color primaryColor = Color.fromARGB(255, 80, 200, 120);
-Color darkColor = Color.fromARGB(255, 30, 30, 30);
-Color lightColor = Color.fromARGB(255, 246, 246, 246);
+Color primaryColor = Color(0xFF50C878);
+Color darkColor = Color(0xFF1E1E1E);
+Color lightColor = Color(0xFFF6F6F6);
 Color lightGrey = Color.fromARGB(255, 192, 192, 192);
 Color darkGrey = Color.fromARGB(255, 74, 74, 74);
 

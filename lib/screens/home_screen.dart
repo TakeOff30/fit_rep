@@ -1,3 +1,4 @@
+import 'package:fit_rep/components/statistics/statitics_tutorial.dart';
 import 'package:fit_rep/enums.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
@@ -29,23 +30,34 @@ class _HomeScreenState extends State<HomeScreen> {
     var _settingsProvider = Provider.of<SettingsManager>(context);
     final settingsProvider = Provider.of<SettingsManager>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Weekly Statistics',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Kanit',
+            )),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.info,
+              color: settingsProvider.isDarkMode
+                  ? Theme.of(context).primaryColorLight
+                  : Theme.of(context).primaryColorDark,
+            ),
+            onPressed: () {
+              showDialog(
+                  context: context, builder: (context) => StatisticsTutorial());
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const Center(
-                child: Text(
-                  'Weekly Statistics',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Kanit',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 50),
               Center(
                 child: Container(
                   // Container for the statistics

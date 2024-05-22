@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class SettingsManager extends ChangeNotifier {
   bool _isDarkMode = false;
   bool _isNotificationEnabled = true;
+  bool _isSoundEnabled = true;
   int _height = 180;
   int _weight = 70;
   int _notificationFrequency = 0;
@@ -12,6 +13,7 @@ class SettingsManager extends ChangeNotifier {
 
   bool get isDarkMode => _isDarkMode;
   bool get isNotificationEnabled => _isNotificationEnabled;
+  bool get isSoundEnabled => _isSoundEnabled;
   int get height => _height;
   int get weight => _weight;
   int get notificationFrequency => _notificationFrequency;
@@ -25,6 +27,11 @@ class SettingsManager extends ChangeNotifier {
 
   void toggleNotification() {
     _isNotificationEnabled = !isNotificationEnabled;
+    notifyListeners();
+  }
+
+  void toggleSound() {
+    _isSoundEnabled = !isSoundEnabled;
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'package:fit_rep/components/statistics/level_bar.dart';
 import 'package:fit_rep/models/workout.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/utils.dart';
@@ -11,11 +12,6 @@ class WorkoutTerminationScreen extends StatelessWidget {
   CompletedWorkout completedWorkout;
   final onLoadPlayer = AudioPlayer();
 
-  Future<void> setupAudio() async {
-    await onLoadPlayer.setUrl('asset:assets/sounds/done.mp3');
-    onLoadPlayer.play();
-  }
-
   WorkoutTerminationScreen({required this.completedWorkout});
   @override
   Widget build(BuildContext context) {
@@ -23,6 +19,13 @@ class WorkoutTerminationScreen extends StatelessWidget {
         Provider.of<StatisticsManager>(context, listen: false);
     Provider.of<WorkoutsManager>(context)
         .addCompletedWorkout(DateTime.now(), completedWorkout);
+
+    Future<void> setupAudio() async {
+      var settingsManager =
+          Provider.of<SettingsManager>(context, listen: false);
+      await onLoadPlayer.setUrl('asset:assets/sounds/done.mp3');
+      if (settingsManager.isSoundEnabled) onLoadPlayer.play();
+    }
 
     statisticsProvider.updateCalories(completedWorkout.date.weekday.toString(),
         completedWorkout.burnedCalories);
