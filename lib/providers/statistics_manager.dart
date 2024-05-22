@@ -4,6 +4,7 @@ import 'package:fit_rep/enums.dart';
 import 'package:fit_rep/utils.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:async';
 
 class StatisticsManager extends ChangeNotifier {
   Map<String, int> _weeklyCalories = {
@@ -59,6 +60,28 @@ class StatisticsManager extends ChangeNotifier {
       totalXPToLevelUp = 100 * userLevel;
     }
     notifyListeners();
+  }
+
+  void updateXPGradually(int value) {
+    int xpToAdd = value;
+    int increment = 1;
+    Timer.periodic(Duration(milliseconds: 10), (timer) {
+      if (xpToAdd <= 0) {
+        timer.cancel();
+        return;
+      }
+      if (xpToAdd < increment) {
+        increment = xpToAdd;
+      }
+      xpToAdd -= increment;
+      currentXP += increment;
+      if (currentXP >= totalXPToLevelUp) {
+        userLevel++;
+        currentXP = currentXP - totalXPToLevelUp;
+        totalXPToLevelUp = 100 * userLevel;
+      }
+      notifyListeners();
+    });
   }
 
   void updateMuscle(Muscle muscle, bool secondaryMuscle) {

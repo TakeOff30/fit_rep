@@ -19,20 +19,16 @@ class WorkoutTerminationScreen extends StatelessWidget {
   WorkoutTerminationScreen({required this.completedWorkout});
   @override
   Widget build(BuildContext context) {
-    var statisticsProvider = Provider.of<StatisticsManager>(context, listen: false);
+    var statisticsProvider =
+        Provider.of<StatisticsManager>(context, listen: false);
     Provider.of<WorkoutsManager>(context)
         .addCompletedWorkout(DateTime.now(), completedWorkout);
 
     statisticsProvider.updateCalories(completedWorkout.date.weekday.toString(),
         completedWorkout.burnedCalories);
-    
-    statisticsProvider.updateXP(completedWorkout.calculateXP());
-    
-  
-
 
     Future.delayed(Duration(milliseconds: 500), () {
-      statisticsProvider.updateXP(completedWorkout.calculateXP());
+      statisticsProvider.updateXPGradually(completedWorkout.calculateXP());
     });
 
     completedWorkout.exercises.keys.forEach((element) {
@@ -89,10 +85,14 @@ class WorkoutTerminationScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        LevelBar(
-                          level: statisticsProvider.userLevel,
-                          currentXP: statisticsProvider.currentXP,
-                          maxXP: statisticsProvider.totalXPToLevelUp,
+                        Consumer<StatisticsManager>(
+                          builder: (context, statisticsManager, child) {
+                            return LevelBar(
+                              level: statisticsManager.userLevel,
+                              currentXP: statisticsManager.currentXP,
+                              maxXP: statisticsManager.totalXPToLevelUp,
+                            );
+                          },
                         ),
                       ],
                     ),
