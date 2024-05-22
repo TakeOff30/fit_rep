@@ -72,7 +72,7 @@ class _WeeklyKcalChartState extends State<WeeklyKcalChart> {
                         titles[value.toInt() % titles.length],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Roboto',
+                          fontFamily: 'Kanit',
                           fontSize: 14,
                           color: settingsProvider.isDarkMode
                               ? Theme.of(context).primaryColorLight

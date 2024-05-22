@@ -31,8 +31,6 @@ class ExercisesSelection extends StatefulWidget {
 
   ExercisesSelection(this.addExercises);
 
-  
-
   @override
   _ExercisesSelectionState createState() => _ExercisesSelectionState();
 }
@@ -60,7 +58,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
         title: Text(
           'Exercises List',
           style: TextStyle(
-              fontFamily: 'Roboto', fontSize: 24, fontWeight: FontWeight.bold),
+              fontFamily: 'Kanit', fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),
       body: Padding(
@@ -165,7 +163,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                       color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF39FF14),
+                  backgroundColor: Theme.of(context).primaryColor,
                   fixedSize: Size(170, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

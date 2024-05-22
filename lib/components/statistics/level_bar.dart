@@ -36,16 +36,18 @@ class XPGradientProgressBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('LV. $level', style: TextStyle(
-                fontSize: 18,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.normal,
-              )),
-              Text('$currentXP/$maxXP XP', style: TextStyle(
-                fontSize: 18,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.normal,
-                )),
+              Text('LV. $level',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Kanit',
+                    fontWeight: FontWeight.normal,
+                  )),
+              Text('$currentXP/$maxXP XP',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Kanit',
+                    fontWeight: FontWeight.normal,
+                  )),
             ],
           ),
         ),
@@ -54,7 +56,8 @@ class XPGradientProgressBar extends StatelessWidget {
           width: double.infinity,
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: Color(0xFFD9D9D9), // Background color for the uncompleted part
+            color:
+                Color(0xFFD9D9D9), // Background color for the uncompleted part
             borderRadius: BorderRadius.circular(5),
           ),
           child: FractionallySizedBox(

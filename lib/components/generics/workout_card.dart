@@ -33,7 +33,7 @@ class WorkoutCard extends StatelessWidget {
             workout.name,
             style: const TextStyle(
               fontSize: 16,
-              fontFamily: 'Roboto',
+              fontFamily: 'Kanit',
             ),
           ),
           const SizedBox(height: 10), // Spazio tra titolo e contenuti
@@ -50,7 +50,7 @@ class WorkoutCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodySmall!.fontSize,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Kanit',
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -59,7 +59,7 @@ class WorkoutCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodySmall!.fontSize,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Kanit',
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -68,7 +68,7 @@ class WorkoutCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodySmall!.fontSize,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Kanit',
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -77,7 +77,7 @@ class WorkoutCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodySmall!.fontSize,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Kanit',
                       ),
                     ),
                   ],

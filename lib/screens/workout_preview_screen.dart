@@ -179,7 +179,7 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF39FF14),
+                      backgroundColor: Theme.of(context).primaryColor,
                       fixedSize: Size(170, 48),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

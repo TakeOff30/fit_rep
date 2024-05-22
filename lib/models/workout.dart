@@ -50,7 +50,7 @@ class Workout {
       }
       totalCalories += exerciseCalories;
     });
-    return totalCalories;
+    return totalCalories / 1000;
   }
 
   int calculateXP() {

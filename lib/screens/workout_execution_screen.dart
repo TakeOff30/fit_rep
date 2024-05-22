@@ -7,6 +7,7 @@ import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/screens/workout_termination_screen.dart';
+import 'package:fit_rep/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
@@ -52,6 +53,8 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     flutterTts.setLanguage("en-US");
     flutterTts.setSpeechRate(1.0);
     flutterTts.setVolume(1.0);
+    flutterTts.speak(
+        'The first exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       print('Global timer running');
       if (mounted) {
@@ -135,6 +138,10 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
         if (currentExerciseIndex < widget.workout.exercises.length - 1) {
           currentSetIndex = 0;
           currentExerciseIndex++;
+          caloriesCounter += exerciseCaloriesBurned(
+              widget.workout.exercises.keys.toList()[currentExerciseIndex],
+              widget.workout.exercises.values.toList()[currentExerciseIndex],
+              Provider.of<SettingsManager>(context, listen: false).weight);
           flutterTts.speak(
               'Next exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
           player2.play();

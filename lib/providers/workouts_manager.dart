@@ -281,6 +281,23 @@ class WorkoutsManager extends ChangeNotifier {
     ];
   }
 
+  List<DateTime> getWorkoutDates() {
+    final plannedDates = plannedWorkouts.values
+        .expand((workouts) => workouts.map((w) {
+              return (w as PlannedWorkout).date;
+            }).whereType<DateTime>())
+        .toList();
+
+    final completedDates = completedWorkouts.values
+        .expand((workouts) => workouts.map((w) {
+              return (w as CompletedWorkout).date;
+            }).whereType<DateTime>())
+        .toList();
+
+    final allDates = [...plannedDates, ...completedDates];
+    return allDates.toSet().toList();
+  }
+
   // Future<void> saveWorkouts() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   prefs.setString('workouts', jsonEncode(_workouts));

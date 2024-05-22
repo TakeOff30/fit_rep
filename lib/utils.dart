@@ -7,7 +7,7 @@ String formatDate(DateTime date) {
   return '${date.day}/${date.month}/${date.year}';
 }
 
-String formatTime(int seconds){
+String formatTime(int seconds) {
   return '${(seconds ~/ 60).toString().padLeft(2, '0')}:${(seconds % 60).toString().padLeft(2, '0')}';
 }
 
@@ -27,5 +27,5 @@ double exerciseCaloriesBurned(
           weight;
     }
   }
-  return exerciseCalories;
+  return exerciseCalories / 1000;
 }

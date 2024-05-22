@@ -91,7 +91,7 @@ class _SetSelectionState extends State<SetSelection> {
                       fontSize: 18),
                 ),
                 IconButton(
-                  icon: Icon(Icons.add, color: Color(0xFF39FF14)),
+                  icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
                   iconSize: 48,
                   onPressed: () {
                     setState(() {
@@ -148,7 +148,7 @@ class _SetSelectionState extends State<SetSelection> {
                 color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF39FF14),
+            backgroundColor: Theme.of(context).primaryColor,
             fixedSize: Size(170, 48),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),

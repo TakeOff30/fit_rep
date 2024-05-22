@@ -191,7 +191,7 @@ class MyGymScreenState extends State<MyGymScreen> {
             color: Color(0xFF1E1E1E),
           ),
           shape: CircleBorder(),
-          backgroundColor: Color(0xFF39FF14),
+          backgroundColor: Theme.of(context).primaryColor,
           //backgroundColor: Colors.green,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

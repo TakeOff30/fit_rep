@@ -21,6 +21,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Consumer<WorkoutsManager>(
         builder: (context, workoutsManager, child) {
       _selectedDayWorkouts = workoutsManager.getWorkoutsByDay(_selectedDay);
+      List<DateTime> workoutDates = workoutsManager.getWorkoutDates();
+      print(workoutDates);
+
       return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -40,7 +43,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
               selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
-                  //_selectedDay = DateTime(selectedDay.year, selectedDay.month, selectedDay.day, 23, 59, 59);
                   _selectedDay = selectedDay;
                   _selectedDayWorkouts =
                       workoutsManager.getWorkoutsByDay(selectedDay);
@@ -48,11 +50,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
               },
               calendarStyle: CalendarStyle(
                 selectedDecoration: BoxDecoration(
-                  color: Color(0xFF39FF14),
+                  color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: Color(0xFF39FF14).withOpacity(0.3),
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
                   shape: BoxShape.circle,
                 ),
                 defaultTextStyle: TextStyle(fontFamily: 'Roboto'),
@@ -75,6 +77,36 @@ class _CalendarScreenState extends State<CalendarScreen> {
               daysOfWeekStyle: DaysOfWeekStyle(
                 weekdayStyle: TextStyle(fontFamily: 'Roboto'),
                 weekendStyle: TextStyle(fontFamily: 'Roboto'),
+              ),
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, date, events) {
+                  if (workoutDates.contains(date)) {
+                    return Positioned(
+                      bottom: 1,
+                      child: Container(
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  } else if (date.weekday == DateTime.sunday) {
+                    return Positioned(
+                      bottom: 1,
+                      child: Container(
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.yellow,
+                        ),
+                      ),
+                    );
+                  }
+                  return SizedBox();
+                },
               ),
             ),
             Expanded(
@@ -103,8 +135,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   color: Color(0xFF1E1E1E),
                 ),
                 shape: CircleBorder(),
-                backgroundColor: Color(0xFF39FF14),
-                //backgroundColor: Colors.green,
+                backgroundColor: Theme.of(context).primaryColor,
               ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );

@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     fontSize: 24.0,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Kanit',
                   ),
                 ),
               ),
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Kanit',
                       ),
                     ),
                     const SizedBox(height: 50),
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Kanit',
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
+                                  fontFamily: 'Kanit',
                                 ),
                               ),
                               SizedBox(height: 20), // Add vertical space
@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Kanit',
                   ),
                 ),
             ],
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Roboto')),
+                      fontFamily: 'Kanit')),
             ],
           ),
         ),

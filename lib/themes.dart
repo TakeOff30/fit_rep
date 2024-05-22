@@ -59,35 +59,35 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineMedium: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         headlineSmall: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: darkColor,
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 16,
           color: darkColor,
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 14,
           color: darkColor,
         ),
         bodySmall: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 12,
           color: darkColor,
         ),
@@ -154,35 +154,35 @@ class FitRepTheme {
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 24,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         headlineMedium: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         headlineSmall: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 18,
           fontWeight: FontWeight.bold,
           color: lightColor,
         ),
         bodyLarge: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 16,
           color: lightColor,
         ),
         bodyMedium: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 14,
           color: lightColor,
         ),
         bodySmall: TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Kanit',
           fontSize: 12,
           color: lightColor,
         ),

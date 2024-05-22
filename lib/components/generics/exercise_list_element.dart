@@ -39,7 +39,7 @@ class ExerciseListElement extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: Text(exercise.name,
-                    style: TextStyle(fontSize: 16, fontFamily: "Roboto")),
+                    style: TextStyle(fontSize: 16, fontFamily: "Kanit")),
                 width: MediaQuery.of(context).size.width * 0.3,
               ),
               Container(
@@ -56,7 +56,7 @@ class ExerciseListElement extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 16,
-                      fontFamily: "Roboto",
+                      fontFamily: "Kanit",
                       fontWeight: FontWeight.normal)),
               if (canDelete == true)
                 IconButton(
