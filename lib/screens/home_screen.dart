@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       .toList(), // Add vertical space
                 ]),
               if (_selectedIcon == 1)
-                XPGradientProgressBar(
+                LevelBar(
                   level: _statisticsProvider.userLevel,
                   currentXP: _statisticsProvider.currentXP,
                   maxXP: _statisticsProvider.totalXPToLevelUp,

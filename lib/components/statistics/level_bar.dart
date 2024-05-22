@@ -3,12 +3,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class XPGradientProgressBar extends StatelessWidget {
+class LevelBar extends StatelessWidget {
   final int level;
   final int currentXP;
   final int maxXP;
 
-  XPGradientProgressBar({
+  LevelBar({
     Key? key,
     required this.level,
     required this.currentXP,

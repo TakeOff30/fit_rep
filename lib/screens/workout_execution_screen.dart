@@ -56,7 +56,6 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     flutterTts.speak(
         'The first exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      print('Global timer running');
       if (mounted) {
         setState(() {
           if (_isRunningGlobal) _globalTimerCounter++;
@@ -103,7 +102,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
             _isRunningExercise = false;
             timer.cancel();
             player2.play();
-            player2.seek(Duration.zero);
+            player2.setAsset('assets/sounds/done.mp3');
           } else {
             _exerciseTimerCounter--;
             _percent =
@@ -133,7 +132,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
               1) {
         currentSetIndex++;
         player2.play();
-        player2.seek(Duration.zero);
+        player2.setAsset('assets/sounds/done.mp3');
       } else {
         if (currentExerciseIndex < widget.workout.exercises.length - 1) {
           currentSetIndex = 0;
@@ -145,6 +144,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
           flutterTts.speak(
               'Next exercise is ${widget.workout.exercises.keys.toList()[currentExerciseIndex].name}');
           player2.play();
+          player2.setAsset('assets/sounds/done.mp3');
         } else {
           CompletedWorkout completedWorkout = CompletedWorkout(
             widget.workout,
@@ -152,8 +152,6 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
             caloriesCounter.toInt(),
             Duration(seconds: _globalTimerCounter),
           );
-          Provider.of<WorkoutsManager>(context, listen: false)
-              .addCompletedWorkout(DateTime.now(), completedWorkout);
 
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return WorkoutTerminationScreen(

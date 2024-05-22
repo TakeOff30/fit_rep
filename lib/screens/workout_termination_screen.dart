@@ -1,6 +1,7 @@
 import 'package:fit_rep/components/statistics/level_bar.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
+import 'package:fit_rep/providers/workouts_manager.dart';
 import 'package:fit_rep/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -18,7 +19,27 @@ class WorkoutTerminationScreen extends StatelessWidget {
   WorkoutTerminationScreen({required this.completedWorkout});
   @override
   Widget build(BuildContext context) {
-    var statisticsProvider = Provider.of<StatisticsManager>(context);
+    var statisticsProvider = Provider.of<StatisticsManager>(context, listen: false);
+    Provider.of<WorkoutsManager>(context)
+        .addCompletedWorkout(DateTime.now(), completedWorkout);
+
+    statisticsProvider.updateCalories(completedWorkout.date.weekday.toString(),
+        completedWorkout.burnedCalories);
+    
+    statisticsProvider.updateXP(completedWorkout.calculateXP());
+    
+  
+
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      statisticsProvider.updateXP(completedWorkout.calculateXP());
+    });
+
+    completedWorkout.exercises.keys.forEach((element) {
+      statisticsProvider.updateMuscle(element.primaryMuscle, false);
+      statisticsProvider.updateMuscle(element.secondaryMuscle, true);
+    });
+
     return FutureBuilder(
         future: setupAudio(),
         builder: (context, snapshot) {
@@ -68,7 +89,7 @@ class WorkoutTerminationScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        XPGradientProgressBar(
+                        LevelBar(
                           level: statisticsProvider.userLevel,
                           currentXP: statisticsProvider.currentXP,
                           maxXP: statisticsProvider.totalXPToLevelUp,

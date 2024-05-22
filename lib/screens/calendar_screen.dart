@@ -1,10 +1,12 @@
 import 'package:fit_rep/components/generics/workout_card.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
+import 'package:fit_rep/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:fit_rep/screens/workout_creation_screen.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -18,10 +20,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProvider = Provider.of<SettingsManager>(context);
+
     return Consumer<WorkoutsManager>(
         builder: (context, workoutsManager, child) {
       _selectedDayWorkouts = workoutsManager.getWorkoutsByDay(_selectedDay);
-      List<DateTime> workoutDates = workoutsManager.getWorkoutDates();
+      List<String> workoutDates = workoutsManager.getWorkoutDates();
       print(workoutDates);
 
       return Scaffold(
@@ -80,7 +84,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               ),
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, date, events) {
-                  if (workoutDates.contains(date)) {
+                  if (workoutDates.contains(formatDate(date))) {
                     return Positioned(
                       bottom: 1,
                       child: Container(
@@ -88,19 +92,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         height: 7,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red,
-                        ),
-                      ),
-                    );
-                  } else if (date.weekday == DateTime.sunday) {
-                    return Positioned(
-                      bottom: 1,
-                      child: Container(
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.yellow,
+                          color: Color.fromARGB(255, 80, 200, 120),
                         ),
                       ),
                     );

@@ -7,13 +7,13 @@ import 'package:flutter/foundation.dart';
 
 class StatisticsManager extends ChangeNotifier {
   Map<String, int> _weeklyCalories = {
-    'Monday': 0,
-    'Tuesday': 200,
-    'Wednesday': 50,
-    'Thursday': 300,
-    'Friday': 200,
-    'Saturday': 500,
-    'Sunday': 0,
+    '1': 0,
+    '2': 200,
+    '3': 50,
+    '4': 300,
+    '5': 200,
+    '6': 500,
+    '7': 0,
   };
 
   Map<Muscle, double> _trainedMuscles = {
@@ -53,9 +53,10 @@ class StatisticsManager extends ChangeNotifier {
   void updateXP(int value) {
     totalXPToLevelUp = 100 * userLevel;
     currentXP += value;
-    if (currentXP >= totalXPToLevelUp) {
+    while (currentXP >= totalXPToLevelUp) {
       userLevel++;
       currentXP = currentXP - totalXPToLevelUp;
+      totalXPToLevelUp = 100 * userLevel;
     }
     notifyListeners();
   }
@@ -72,13 +73,13 @@ class StatisticsManager extends ChangeNotifier {
 
   void resetStatistics() {
     _weeklyCalories = {
-      'Monday': 0,
-      'Tuesday': 0,
-      'Wednesday': 0,
-      'Thursday': 0,
-      'Friday': 0,
-      'Saturday': 0,
-      'Sunday': 0,
+      '1': 0,
+      '2': 0,
+      '3': 0,
+      '4': 0,
+      '5': 0,
+      '6': 0,
+      '7': 0,
     };
     notifyListeners();
   }

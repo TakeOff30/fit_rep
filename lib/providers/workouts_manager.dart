@@ -13,7 +13,7 @@ class WorkoutsManager extends ChangeNotifier {
             'Full Body Workout',
             {},
           ),
-          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
+          DateTime.utc(2024, 6, 5),),
       PlannedWorkout(
           Workout(
             'Full Body Workout',
@@ -27,52 +27,7 @@ class WorkoutsManager extends ChangeNotifier {
           ),
           DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
     ],
-    '13/5/2024': [
-      CompletedWorkout(
-          Workout('Today 1', {
-            fitRepExercises[0]: [
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-            ],
-            fitRepExercises[1]: [
-              ExerciseSet.repsSet(
-                  restTime: Duration(minutes: 0, seconds: 10),
-                  reps: 20,
-                  weight: 10),
-              ExerciseSet.repsSet(
-                  restTime: Duration(minutes: 0, seconds: 10),
-                  reps: 20,
-                  weight: 10),
-            ],
-            fitRepExercises[0]: [
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-              ExerciseSet.repsSet(
-                  reps: 10,
-                  weight: 135,
-                  restTime: Duration(minutes: 0, seconds: 10)),
-            ],
-          }),
-          DateTime(2024, 5, 13, 10, 0, 0, 0, 0),
-          500,
-          Duration(minutes: 60)),
-    ],
+    
   };
   final Map<String, List<Workout>> completedWorkouts = {
     '5/5/2024': [
@@ -162,6 +117,52 @@ class WorkoutsManager extends ChangeNotifier {
             ],
           }),
           DateTime.utc(2024, 4, 20),
+          500,
+          Duration(minutes: 60)),
+    ],
+    '13/5/2024': [
+      CompletedWorkout(
+          Workout('Today 1', {
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+            ],
+            fitRepExercises[1]: [
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 10),
+                  reps: 20,
+                  weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 10),
+                  reps: 20,
+                  weight: 10),
+            ],
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 10)),
+            ],
+          }),
+          DateTime.utc(2024, 5, 13, 10, 0, 0, 0, 0),
           500,
           Duration(minutes: 60)),
     ],
@@ -281,21 +282,23 @@ class WorkoutsManager extends ChangeNotifier {
     ];
   }
 
-  List<DateTime> getWorkoutDates() {
+  List<String> getWorkoutDates() {
     final plannedDates = plannedWorkouts.values
         .expand((workouts) => workouts.map((w) {
-              return (w as PlannedWorkout).date;
-            }).whereType<DateTime>())
+              if (w is PlannedWorkout) return formatDate(w.date);
+              return null;
+            }).whereType<String>())
         .toList();
 
     final completedDates = completedWorkouts.values
         .expand((workouts) => workouts.map((w) {
-              return (w as CompletedWorkout).date;
-            }).whereType<DateTime>())
+              if (w is CompletedWorkout) return formatDate(w.date);
+              return null;
+            }).whereType<String>())
         .toList();
 
     final allDates = [...plannedDates, ...completedDates];
-    return allDates.toSet().toList();
+    return allDates.toSet().toList(); 
   }
 
   // Future<void> saveWorkouts() async {
