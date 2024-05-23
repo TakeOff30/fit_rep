@@ -16,18 +16,14 @@ class MyGymScreen extends StatefulWidget {
 }
 
 class MyGymScreenState extends State<MyGymScreen> {
-  bool isTodayWorkout =
-      false; // Questa variabile dovrebbe controllare quale set di workout mostrare
+  bool isTodayWorkout = false;
   Filter filters = Filter('', [], '', []);
   List<Workout> filteredWorkouts = [];
-
-  void updateWorkouts() {}
 
   @override
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingsManager>(context);
 
-    updateWorkouts();
     return Consumer<WorkoutsManager>(
         builder: (context, workoutsManager, child) {
       List<Workout> toShow = [];
@@ -58,7 +54,6 @@ class MyGymScreenState extends State<MyGymScreen> {
                     onPressed: () {
                       setState(() {
                         isTodayWorkout = true;
-                        updateWorkouts();
                         List<Workout> toShow = [];
                         if (isTodayWorkout) {
                           toShow = workoutsManager.getWorkoutsByDay(
@@ -102,7 +97,6 @@ class MyGymScreenState extends State<MyGymScreen> {
                     onPressed: () {
                       setState(() {
                         isTodayWorkout = false;
-                        updateWorkouts();
                         List<Workout> toShow = [];
                         if (isTodayWorkout) {
                           toShow = workoutsManager.getWorkoutsByDay(
@@ -159,20 +153,37 @@ class MyGymScreenState extends State<MyGymScreen> {
                           .getCreatedWorkouts(); // Ottiene i workout creati
                     }
                     filteredWorkouts = filters.filterWorkouts(toShow);
-                    updateWorkouts();
                   });
                 },
               ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(8),
-                  children: filteredWorkouts.map(
-                    (workout) {
-                      return WorkoutCard(workout: workout);
-                    },
-                  ).toList(),
-                ),
-              ),
+              (filteredWorkouts.isNotEmpty)
+                  ? Expanded(
+                      child: ListView(
+                        padding: const EdgeInsets.all(8),
+                        children: filteredWorkouts.map(
+                          (workout) {
+                            return WorkoutCard(workout: workout);
+                          },
+                        ).toList(),
+                      ),
+                    )
+                  : (toShow.isNotEmpty)
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              'No workouts corresponding to the filters',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: Center(
+                            child: Text(
+                              'No workouts available',
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ),
+                        ),
             ],
           ),
         ),

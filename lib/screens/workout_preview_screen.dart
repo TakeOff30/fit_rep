@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 
 class WorkoutPreviewScreen extends StatefulWidget {
   final Workout workout;
@@ -47,6 +48,103 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
     );
   }
 
+  void _showOptionsModal() {
+    final settingsProvider =
+        Provider.of<SettingsManager>(context, listen: false);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: settingsProvider.isDarkMode
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColorLight,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading:
+                    Icon(Icons.edit, color: Color.fromARGB(255, 74, 74, 74)),
+                title: Text('Edit',
+                    style: TextStyle(
+                        color: settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColorDark,
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyMedium!.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize)),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WorkoutCreationScreen(
+                        toModify: widget.workout,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              if (widget.workout is! PlannedWorkout &&
+                  widget.workout is! CompletedWorkout)
+                ListTile(
+                  leading: Icon(Icons.calendar_month,
+                      color: Color.fromARGB(255, 74, 74, 74)),
+                  title: Text('Plan',
+                      style: TextStyle(
+                          color: settingsProvider.isDarkMode
+                              ? Theme.of(context).primaryColorLight
+                              : Theme.of(context).primaryColorDark,
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .fontFamily,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .fontSize)),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CalendarModal(
+                          onSelectedDate: (DateTime date) {
+                            Provider.of<WorkoutsManager>(context, listen: false)
+                                .addPlannedWorkout(date, widget.workout);
+                            Navigator.of(context).pop();
+                            print("Selected date: $date");
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              ListTile(
+                leading:
+                    Icon(Icons.delete, color: Color.fromARGB(255, 74, 74, 74)),
+                title: Text('Delete',
+                    style: TextStyle(
+                        color: settingsProvider.isDarkMode
+                            ? Theme.of(context).primaryColorLight
+                            : Theme.of(context).primaryColorDark,
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyMedium!.fontFamily,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyMedium!.fontSize)),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _showDeleteConfirmationDialog();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   bool checkShowStart() {
     if (widget.workout is CompletedWorkout) {
       return false;
@@ -60,6 +158,8 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsProvider = Provider.of<SettingsManager>(context);
+
     return Consumer<WorkoutsManager>(builder: (context, value, child) {
       return Scaffold(
         appBar: AppBar(
@@ -68,62 +168,9 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
             style: Theme.of(context).textTheme.headlineLarge,
           ),
           actions: [
-            PopupMenuButton<String>(
-              onSelected: (String value) {
-                if (value == 'edit') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WorkoutCreationScreen(
-                        toModify: widget.workout,
-                      ),
-                    ),
-                  );
-                } else if (value == 'delete') {
-                  _showDeleteConfirmationDialog();
-                } else if (value == 'plan') {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CalendarModal(
-                        onSelectedDate: (DateTime date) {
-                          Provider.of<WorkoutsManager>(context, listen: false)
-                              .addPlannedWorkout(date, widget.workout);
-                          Navigator.of(context).pop();
-                          print("Selected date: $date");
-                        },
-                      );
-                    },
-                  );
-                }
-              },
-              itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem<String>(
-                    value: 'edit',
-                    child: ListTile(
-                      leading: Icon(Icons.edit),
-                      title: Text('Edit'),
-                    ),
-                  ),
-                  if (widget.workout is! PlannedWorkout &&
-                      widget.workout is! CompletedWorkout)
-                    PopupMenuItem<String>(
-                      value: 'plan',
-                      child: ListTile(
-                        leading: Icon(Icons.calendar_month),
-                        title: Text('Plan'),
-                      ),
-                    ),
-                  PopupMenuItem<String>(
-                    value: 'delete',
-                    child: ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text('Delete'),
-                    ),
-                  ),
-                ];
-              },
+            IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: _showOptionsModal,
             ),
           ],
         ),
@@ -133,7 +180,7 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               (widget.workout is CompletedWorkout)
-                  ? Row(
+                  ? Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(

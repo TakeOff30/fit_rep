@@ -56,7 +56,11 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
         ),
         title: Text(
             (widget.toModify != null) ? "Modify Workout" : "Create Workout",
-            style: TextStyle(fontSize: 20)),
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Kanit',
+            )),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -146,17 +150,74 @@ class _WorkoutCreationScreenState extends State<WorkoutCreationScreen> {
             padding: const EdgeInsets.only(bottom: 32),
             child: ElevatedButton(
               onPressed: () {
-                print(widget.date);
-                if (widget.toModify != null) {
-                  workoutsProvider.modifyWorkout(widget.toModify!, workout);
-                  Navigator.of(context).pop();
+                if (workout.name.isEmpty && workout.exercises.isEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text(
+                            'Please fill out the workout name and add at least one exercise.'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (workout.name.isEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Please fill out the workout name.'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if (workout.exercises.isEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Please add at least one exercise.'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 } else {
-                  if (widget.date != null) {
-                    workoutsProvider.addPlannedWorkout(widget.date!, workout);
+                  print(widget.date);
+                  if (widget.toModify != null) {
+                    workoutsProvider.modifyWorkout(widget.toModify!, workout);
+                    Navigator.of(context).pop();
                   } else {
-                    workoutsProvider.addWorkout(workout);
+                    if (widget.date != null) {
+                      workoutsProvider.addPlannedWorkout(widget.date!, workout);
+                    } else {
+                      workoutsProvider.addWorkout(workout);
+                    }
+                    Navigator.of(context).pop();
                   }
-                  Navigator.of(context).pop();
                 }
               },
               child: Text(

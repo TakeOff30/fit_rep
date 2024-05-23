@@ -1,6 +1,8 @@
 import 'package:fit_rep/models/exercise_set.dart';
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/picker.dart';
+import 'package:provider/provider.dart';
 
 class SetCard extends StatefulWidget {
   ExerciseSet exeSet;
@@ -45,6 +47,7 @@ class SetCardState extends State<SetCard> {
   Widget build(context) {
     return Builder(builder: (context) {
       return Container(
+        margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey, width: 1),
@@ -161,13 +164,38 @@ class SetCardState extends State<SetCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Provider.of<SettingsManager>(context).isDarkMode
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColorLight,
+          contentTextStyle: TextStyle(
+            color: Provider.of<SettingsManager>(context).isDarkMode
+                ? Theme.of(context).primaryColorLight
+                : Theme.of(context).primaryColorDark,
+          ),
           contentPadding: EdgeInsets.all(16.0),
           content: Container(
-            height: 300,
+            height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               children: [
                 Expanded(
                   child: Picker(
+                    textStyle: TextStyle(
+                      color: Provider.of<SettingsManager>(context).isDarkMode
+                          ? Theme.of(context).primaryColorLight
+                          : Theme.of(context).primaryColorDark,
+                    ),
+                    backgroundColor:
+                        Provider.of<SettingsManager>(context).isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColorLight,
+                    containerColor:
+                        Provider.of<SettingsManager>(context).isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColorLight,
+                    headerColor:
+                        Provider.of<SettingsManager>(context).isDarkMode
+                            ? Theme.of(context).primaryColorDark
+                            : Theme.of(context).primaryColorLight,
                     adapter: NumberPickerAdapter(data: [
                       NumberPickerColumn(
                           begin: 0, end: 2, suffix: Text("m")), // minutes
@@ -182,11 +210,21 @@ class SetCardState extends State<SetCard> {
                             alignment: Alignment.center,
                             child: Text(':',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            color: Colors.white,
+                            color:
+                                Provider.of<SettingsManager>(context).isDarkMode
+                                    ? Theme.of(context).primaryColorDark
+                                    : Theme.of(context).primaryColorLight,
                           )),
                     ],
                     title: Text("Select duration"),
-                    selectedTextStyle: TextStyle(color: Colors.blue),
+                    confirmTextStyle: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                    cancelTextStyle: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                    selectedTextStyle:
+                        TextStyle(color: Theme.of(context).primaryColor),
                     onConfirm: (Picker picker, List value) {
                       onConfirm(duration);
                     },

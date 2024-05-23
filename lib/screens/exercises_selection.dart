@@ -1,7 +1,9 @@
+import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fit_rep/config.dart';
 import 'package:fit_rep/models/exercise.dart';
 import 'package:fit_rep/enums.dart';
+import 'package:provider/provider.dart';
 
 class Filter {
   String exerciseNameFilter = '';
@@ -53,6 +55,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
 
   @override
   Widget build(BuildContext context) {
+    var settingsProvider = Provider.of<SettingsManager>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -102,27 +105,31 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: ChoiceChip(
-                      label: Text(muscles[index]),
-                      selected: selectedMuscle == muscles[index],
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selectedMuscle == muscles[index]) {
-                            selectedMuscle = null;
-                            filters.musclesFilter = '';
-                          } else if (selected) {
-                            selectedMuscle = muscles[index];
-                            filters.musclesFilter = muscles[index];
-                          }
-                          updateExercises();
-                        });
-                      },
-                      backgroundColor: Colors.grey[300],
-                      selectedColor: Colors.blue,
-                      labelStyle: TextStyle(
-                          color: selectedMuscle == muscles[index]
+                        label: Text(muscles[index]),
+                        selected: selectedMuscle == muscles[index],
+                        onSelected: (bool selected) {
+                          setState(() {
+                            if (selectedMuscle == muscles[index]) {
+                              selectedMuscle = null;
+                              filters.musclesFilter = '';
+                            } else if (selected) {
+                              selectedMuscle = muscles[index];
+                              filters.musclesFilter = muscles[index];
+                            }
+                            updateExercises();
+                          });
+                        },
+                        backgroundColor: Colors.grey[300],
+                        selectedColor: Colors.blue,
+                        labelStyle: TextStyle(
+                            color: settingsProvider.isDarkMode
+                                ? Colors.white
+                                : Colors.black),
+                        iconTheme: IconThemeData(
+                          color: settingsProvider.isDarkMode
                               ? Colors.white
-                              : Colors.black),
-                    ),
+                              : Colors.black,
+                        )),
                   );
                 },
               ),
@@ -159,8 +166,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
                 },
                 child: Text(
                   'Select',
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 6, 6, 6), fontSize: 20),
+                  style: TextStyle(fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,

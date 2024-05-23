@@ -75,26 +75,26 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   color: Theme.of(context).primaryColor.withOpacity(0.3),
                   shape: BoxShape.circle,
                 ),
-                defaultTextStyle: TextStyle(fontFamily: 'Roboto'),
+                defaultTextStyle: TextStyle(fontFamily: 'Kanit'),
                 todayTextStyle: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Kanit',
                   color: Color(0xFF1E1E1E),
                   fontWeight: FontWeight.bold,
                 ),
                 selectedTextStyle: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Kanit',
                     color: Color(0xFF1E1E1E),
                     fontWeight: FontWeight.bold),
-                weekendTextStyle: TextStyle(fontFamily: 'Roboto'),
-                holidayTextStyle: TextStyle(fontFamily: 'Roboto'),
+                weekendTextStyle: TextStyle(fontFamily: 'Kanit'),
+                holidayTextStyle: TextStyle(fontFamily: 'Kanit'),
               ),
               headerStyle: HeaderStyle(
-                titleTextStyle: TextStyle(fontFamily: 'Roboto', fontSize: 18),
+                titleTextStyle: TextStyle(fontFamily: 'Kanit', fontSize: 18),
                 formatButtonVisible: false,
               ),
               daysOfWeekStyle: DaysOfWeekStyle(
-                weekdayStyle: TextStyle(fontFamily: 'Roboto'),
-                weekendStyle: TextStyle(fontFamily: 'Roboto'),
+                weekdayStyle: TextStyle(fontFamily: 'Kanit'),
+                weekendStyle: TextStyle(fontFamily: 'Kanit'),
               ),
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, date, events) {

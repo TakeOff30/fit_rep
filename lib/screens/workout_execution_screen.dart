@@ -29,13 +29,17 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   Timer? _globalTimer;
   Timer? _timer;
   Timer? _preparationTimer;
+  Timer? _restTimer;
   int _globalTimerCounter = 0;
   int _preparationTimerCounter = 5;
   int _exerciseTimerCounter = 0;
-  double _percent = 1.0;
+  int _restTimerCounter = 0;
+  double _exercisePercent = 1.0;
+  double _restPercent = 1.0;
   bool _isRunningExercise = false;
   bool _isRunningGlobal = true;
-  bool _isPreparationRunning = false;
+  bool _isRunningPreparation = false;
+  bool _isRunningRest = false;
   double caloriesCounter = 0;
   ExerciseSet? currentSet;
   final playerStart = AudioPlayer();
@@ -52,7 +56,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     if (settingsManager.isSoundEnabled) player.play();
     player2.setAsset('assets/sounds/done.mp3');
     flutterTts.setLanguage("en-US");
-    flutterTts.setSpeechRate(1.0);
+    flutterTts.setSpeechRate(0.9);
     flutterTts.setVolume(1.0);
     if (settingsManager.isSoundEnabled)
       flutterTts.speak(
@@ -73,19 +77,19 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     currentSet = widget.workout.exercises.values.toList()[currentExerciseIndex]
         [currentSetIndex];
     _exerciseTimerCounter = currentSet!.executionTime.inSeconds;
-    _percent = 1.0;
+    _exercisePercent = 1.0;
   }
 
   void _startPreparationTimer() {
-    _isPreparationRunning = true;
+    _isRunningPreparation = true;
     _preparationTimerCounter = 5; // Reset preparation timer counter
     _cancelTimers(); // Cancel any running timers
     _preparationTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
         if (_preparationTimerCounter > 0 && _isRunningGlobal) {
           _preparationTimerCounter--;
-        } else if (_preparationTimerCounter == 0) {
-          _isPreparationRunning = false;
+        } else if (_preparationTimerCounter <= 0) {
+          _isRunningPreparation = false;
           _isRunningExercise = true;
           startExerciseTimer();
           timer.cancel();
@@ -108,7 +112,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
             player2.setAsset('assets/sounds/done.mp3');
           } else {
             _exerciseTimerCounter--;
-            _percent =
+            _exercisePercent =
                 _exerciseTimerCounter / currentSet!.executionTime.inSeconds;
           }
         });
@@ -116,9 +120,28 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
     }
   }
 
+  void _startRestTimer() {
+    _isRunningRest = true;
+    _restTimerCounter = currentSet!.restTime.inSeconds;
+    _cancelTimers(); // Cancel any running timers
+    _restTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        if (_restTimerCounter > 0 && _isRunningGlobal) {
+          _restTimerCounter--;
+          _restPercent = _restTimerCounter / currentSet!.restTime.inSeconds;
+        } else if (_restTimerCounter <= 0) {
+          _isRunningRest = false;
+          nextSetOrExercise();
+          timer.cancel();
+        }
+      });
+    });
+  }
+
   void _cancelTimers() {
     _preparationTimer?.cancel();
     _globalTimer?.cancel();
+    _restTimer?.cancel();
     _timer?.cancel();
   }
 
@@ -172,7 +195,7 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
   void togglePlayPause() {
     setState(() {
       _isRunningGlobal = !_isRunningGlobal;
-      if (_isPreparationRunning) {
+      if (_isRunningPreparation) {
         // Pause or resume the preparation timer
         if (_preparationTimer != null && _preparationTimer!.isActive) {
           _preparationTimer!.cancel();
@@ -233,10 +256,13 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
               const SizedBox(height: 10),
               ExecutionSection(
                 isTimed: currentSet!.isTimed,
-                isPreparationRunning: _isPreparationRunning,
-                percent: _percent,
+                isPreparationRunning: _isRunningPreparation,
+                isRestRunning: _isRunningRest,
+                exercisePercent: _exercisePercent,
+                restPercent: _restPercent,
                 exerciseTimerCounter: _exerciseTimerCounter,
                 preparationTimerCounter: _preparationTimerCounter,
+                restTimerCounter: _restTimerCounter,
                 isDarkMode: settingsManager.isDarkMode,
                 reps: currentSet!.reps,
                 weight: currentSet!.weight.toDouble(),
@@ -247,7 +273,16 @@ class _WorkoutExecutionScreenState extends State<WorkoutExecutionScreen> {
                   togglePlayPause();
                 },
                 nextSetOrExercise: () {
-                  nextSetOrExercise();
+                  if (_isRunningPreparation) {
+                    _preparationTimerCounter = 0;
+                  } else if (_isRunningRest) {
+                    _restTimerCounter = 0;
+                    _restPercent = 1.0;
+                  } else {
+                    //_isRunningExercise = false;
+                    _exercisePercent = 1.0;
+                    _startRestTimer();
+                  }
                 },
                 isRunningGlobal: _isRunningGlobal,
               ),

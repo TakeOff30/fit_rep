@@ -58,8 +58,12 @@ class _SetSelectionState extends State<SetSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Set Selection'),
-      ),
+          title: Text('Set election',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Kanit',
+              ))),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -69,6 +73,8 @@ class _SetSelectionState extends State<SetSelection> {
               children: [
                 Text('Timed'),
                 Switch(
+                    activeColor: Theme.of(context).primaryColor,
+                    inactiveTrackColor: Theme.of(context).primaryColor,
                     value: isRepSet,
                     onChanged: ((value) {
                       setState(() {
@@ -86,9 +92,7 @@ class _SetSelectionState extends State<SetSelection> {
               children: [
                 Text(
                   ' %d Sets'.replaceAll('%d', widget.sets.length.toString()),
-                  style: TextStyle(
-                      color: const Color.fromARGB(255, 15, 14, 14),
-                      fontSize: 18),
+                  style: TextStyle(fontSize: 18),
                 ),
                 IconButton(
                   icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
@@ -113,7 +117,10 @@ class _SetSelectionState extends State<SetSelection> {
             ),
             SizedBox(height: 50),
             Builder(builder: (context) {
-              return Column(
+              return Expanded(
+                  child: ListView(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.15),
                 children: [
                   ...widget.sets.asMap().entries.map((entry) {
                     int index = entry.key;
@@ -130,7 +137,7 @@ class _SetSelectionState extends State<SetSelection> {
                     }, index + 1);
                   }).toList()
                 ],
-              );
+              ));
             })
           ],
         ),
