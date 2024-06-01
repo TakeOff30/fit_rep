@@ -62,30 +62,35 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ListTile(
-                leading:
-                    Icon(Icons.edit, color: Color.fromARGB(255, 74, 74, 74)),
-                title: Text('Edit',
-                    style: TextStyle(
-                        color: settingsProvider.isDarkMode
-                            ? Theme.of(context).primaryColorLight
-                            : Theme.of(context).primaryColorDark,
-                        fontFamily:
-                            Theme.of(context).textTheme.bodyMedium!.fontFamily,
-                        fontSize:
-                            Theme.of(context).textTheme.bodyMedium!.fontSize)),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WorkoutCreationScreen(
-                        toModify: widget.workout,
+              if (checkShowModify())
+                ListTile(
+                  leading:
+                      Icon(Icons.edit, color: Color.fromARGB(255, 74, 74, 74)),
+                  title: Text('Edit',
+                      style: TextStyle(
+                          color: settingsProvider.isDarkMode
+                              ? Theme.of(context).primaryColorLight
+                              : Theme.of(context).primaryColorDark,
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .fontFamily,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .fontSize)),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WorkoutCreationScreen(
+                          toModify: widget.workout,
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
               if (widget.workout is! PlannedWorkout &&
                   widget.workout is! CompletedWorkout)
                 ListTile(
@@ -114,7 +119,6 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
                             Provider.of<WorkoutsManager>(context, listen: false)
                                 .addPlannedWorkout(date, widget.workout);
                             Navigator.of(context).pop();
-                            print("Selected date: $date");
                           },
                         );
                       },
@@ -156,6 +160,14 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
     return true;
   }
 
+  bool checkShowModify() {
+    if (widget.workout is CompletedWorkout) {
+      return false;
+    }
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsManager>(context);
@@ -163,6 +175,7 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
     return Consumer<WorkoutsManager>(builder: (context, value, child) {
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
             widget.workout.name,
             style: Theme.of(context).textTheme.headlineLarge,
@@ -174,71 +187,80 @@ class _WorkoutPreviewScreenState extends State<WorkoutPreviewScreen> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              (widget.workout is CompletedWorkout)
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'Burned Calories: ${(widget.workout as CompletedWorkout).burnedCalories} kcal',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          'Time: ${(widget.workout as CompletedWorkout).duration.inMinutes} minutes',
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Expanded(
-                child: ListView(
-                  children: [
-                    for (var entry in widget.workout.exercises.entries)
-                      ExerciseListElement(
-                        exercise: entry.key,
-                        sets: entry.value,
-                        onTap: () {},
-                        onDelete: () {},
-                        canDelete: false,
-                      ),
-                  ],
-                ),
-              ),
-              if (checkShowStart())
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 32),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => WorkoutExecutionScreen(
-                            workout: widget.workout,
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/fitrep-transparent.png"),
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.center,
+                opacity: 0.25),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                (widget.workout is CompletedWorkout)
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'Burned Calories: ${(widget.workout as CompletedWorkout).burnedCalories} kcal',
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
+                          Text(
+                            'Time: ${(widget.workout as CompletedWorkout).duration.inMinutes} minutes',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                        ],
+                      )
+                    : Container(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      for (var entry in widget.workout.exercises.entries)
+                        ExerciseListElement(
+                          exercise: entry.key,
+                          sets: entry.value,
+                          onTap: () {},
+                          onDelete: () {},
+                          canDelete: false,
                         ),
-                      );
-                    },
-                    child: Text(
-                      'Start',
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 6, 6, 6),
-                        fontSize: 20,
+                    ],
+                  ),
+                ),
+                if (checkShowStart())
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WorkoutExecutionScreen(
+                              workout: widget.workout,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Start',
+                        style: TextStyle(
+                          color: const Color.fromARGB(255, 6, 6, 6),
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      fixedSize: Size(170, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        fixedSize: Size(170, 48),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       );

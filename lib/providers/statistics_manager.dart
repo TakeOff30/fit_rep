@@ -31,6 +31,7 @@ class StatisticsManager extends ChangeNotifier {
     Muscle.abs: 0,
   };
 
+  int streak = 0;
   int _workoutsCompleted = 0;
   int _totalWeeklyWorkoutsCompleted = 0;
   Duration _totalWorkoutDuration = Duration(hours: 2, minutes: 30);

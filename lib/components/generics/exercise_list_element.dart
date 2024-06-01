@@ -27,6 +27,9 @@ class ExerciseListElement extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
+          color: (settingsManager.isDarkMode)
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColorLight,
           border: Border.all(color: Colors.grey, width: 1),
           borderRadius: BorderRadius.circular(10.0),
         ),

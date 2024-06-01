@@ -1,4 +1,5 @@
 import 'package:fit_rep/components/generics/filter_card.dart';
+import 'package:fit_rep/components/generics/my_gym_tutorial.dart';
 import 'package:fit_rep/components/generics/workout_card.dart';
 import 'package:fit_rep/models/workout.dart';
 import 'package:fit_rep/providers/settings_manager.dart';
@@ -36,17 +37,34 @@ class MyGymScreenState extends State<MyGymScreen> {
       }
       filteredWorkouts = filters.filterWorkouts(toShow);
       return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('My Gym',
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Kanit',
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.info,
+                color: settingsProvider.isDarkMode
+                    ? Theme.of(context).primaryColorLight
+                    : Theme.of(context).primaryColorDark,
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context, builder: (context) => MyGymTutorial());
+              },
+            ),
+          ],
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text('My Gym',
-                    style: Theme.of(context).textTheme.headlineLarge),
-              ),
-              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -63,10 +81,6 @@ class MyGymScreenState extends State<MyGymScreen> {
                               .getCreatedWorkouts(); // Ottiene i workout creati
                         }
                         filteredWorkouts = filters.filterWorkouts(toShow);
-                        print(
-                            "Filtered workouts count: ${filteredWorkouts.length}");
-                        filteredWorkouts.forEach((workout) => print(workout
-                            .name)); // Assumendo che ci sia un attributo 'name'
                       });
                     },
                     style: ButtonStyle(
@@ -106,10 +120,6 @@ class MyGymScreenState extends State<MyGymScreen> {
                               .getCreatedWorkouts(); // Ottiene i workout creati
                         }
                         filteredWorkouts = filters.filterWorkouts(toShow);
-                        print(
-                            "Filtered workouts count: ${filteredWorkouts.length}");
-                        filteredWorkouts.forEach((workout) => print(workout
-                            .name)); // Assumendo che ci sia un attributo 'name'
                       });
                     },
                     style: ButtonStyle(

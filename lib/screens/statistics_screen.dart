@@ -7,12 +7,12 @@ import 'package:fit_rep/components/statistics/weekly_kcal_bar_charth.dart';
 import 'package:fit_rep/components/statistics/level_bar.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class StatisticsScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _StatisticsScreenState createState() => _StatisticsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _StatisticsScreenState extends State<StatisticsScreen> {
   int _selectedIcon = 3; // Variable to keep track of the selected icon
   int? selectedBarIndex; // Variable to keep track of the selected bar index
 
@@ -31,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final settingsProvider = Provider.of<SettingsManager>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weekly Statistics',
+        centerTitle: true,
+        title: Text('Statistics',
             style: TextStyle(
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
@@ -58,6 +59,25 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Workout completion streak: ${_statisticsProvider.streak}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Kanit',
+                    ),
+                  ),
+                  Icon(
+                    Icons.local_fire_department_outlined,
+                    size: 32,
+                    color: Theme.of(context).primaryColor,
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                   // Container for the statistics

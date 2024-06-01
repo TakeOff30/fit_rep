@@ -20,6 +20,8 @@ class WorkoutTerminationScreen extends StatelessWidget {
     Provider.of<WorkoutsManager>(context)
         .addCompletedWorkout(DateTime.now(), completedWorkout);
 
+    statisticsProvider.streak++;
+
     Future<void> setupAudio() async {
       var settingsManager =
           Provider.of<SettingsManager>(context, listen: false);
@@ -46,19 +48,20 @@ class WorkoutTerminationScreen extends StatelessWidget {
             return CircularProgressIndicator(); // Show a loading spinner while waiting
           } else {
             return Scaffold(
-                appBar: AppBar(
-                    title: Text('Workout Terminated!',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Kanit',
-                        ))),
                 body: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+                        Center(
+                          child: Text('Workout Terminated!',
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Kanit',
+                              )),
+                        ),
                         Text('You did an amazing job!',
                             style: TextStyle(
                               fontSize: 24.0,

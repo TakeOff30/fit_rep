@@ -91,7 +91,7 @@ class _FilterCardState extends State<FilterCard> {
               children: [
                 const Text('Filters'),
                 IconButton(
-                  icon: Icon(Icons.clear),
+                  icon: Icon(Icons.refresh),
                   onPressed: () {
                     setState(() {
                       widget.filter.workoutNameFilter = '';

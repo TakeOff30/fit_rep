@@ -84,7 +84,6 @@ class WorkoutCard extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () {
-                      print(workout);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

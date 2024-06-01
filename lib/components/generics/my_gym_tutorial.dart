@@ -2,7 +2,7 @@ import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CalendarTutorial extends StatelessWidget {
+class MyGymTutorial extends StatelessWidget {
   Widget build(BuildContext context) {
     var settingsProvider = Provider.of<SettingsManager>(context);
     return Dialog(
@@ -16,15 +16,14 @@ class CalendarTutorial extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text('Calendar section',
+              Text('MyGym section',
                   style: Theme.of(context).textTheme.headlineMedium),
               Text(
-                'This is where you can plan your workouts and view the workouts you did in the past. The busy days will be highlighted in the calendar, and you can see the details of the workout by clicking on the day.',
+                'This is where you can manage the workouts you created. You can see the details of the workout by clicking on it. You can see the workouts scheduled for today by clicking the "Today\'s workouts" button on the top left corner.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-              Image.asset('images/calendar_tut_1.png'),
               Text(
-                'You can also add a new workout by clicking on the + button in the bottom right corner.',
+                'You can also add a new workout by clicking on the + button. It will be scheduled for today if "Today\'s workouts" is selected, otherwise it will be added to the list of general workouts.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               ElevatedButton(

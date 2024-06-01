@@ -58,7 +58,8 @@ class _SetSelectionState extends State<SetSelection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Set election',
+          centerTitle: true,
+          title: Text('Set selection',
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,

@@ -7,30 +7,102 @@ import 'package:fit_rep/utils.dart';
 class WorkoutsManager extends ChangeNotifier {
   List<Workout> _workouts = appWorkouts;
   final Map<String, List<Workout>> plannedWorkouts = {
-    '25/5/2024': [
+    '25/6/2024': [
+      PlannedWorkout(
+        Workout(
+          'Full Body Workout',
+          {
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+            fitRepExercises[1]: [
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+              ExerciseSet.repsSet(
+                  restTime: Duration(minutes: 0, seconds: 60),
+                  reps: 20,
+                  weight: 10),
+            ],
+            fitRepExercises[0]: [
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+              ExerciseSet.repsSet(
+                  reps: 10,
+                  weight: 135,
+                  restTime: Duration(minutes: 0, seconds: 60)),
+            ],
+          },
+        ),
+        DateTime.utc(2024, 6, 25),
+      ),
       PlannedWorkout(
           Workout(
-            'Full Body Workout',
-            {},
+            'Full Body Workout 2',
+            {
+              fitRepExercises[0]: [
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+              ],
+              fitRepExercises[1]: [
+                ExerciseSet.repsSet(
+                    restTime: Duration(minutes: 0, seconds: 60),
+                    reps: 20,
+                    weight: 10),
+                ExerciseSet.repsSet(
+                    restTime: Duration(minutes: 0, seconds: 60),
+                    reps: 20,
+                    weight: 10),
+              ],
+              fitRepExercises[0]: [
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+                ExerciseSet.repsSet(
+                    reps: 10,
+                    weight: 135,
+                    restTime: Duration(minutes: 0, seconds: 60)),
+              ],
+            },
           ),
-          DateTime.utc(2024, 6, 5),),
-      PlannedWorkout(
-          Workout(
-            'Full Body Workout',
-            {},
-          ),
-          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
-      PlannedWorkout(
-          Workout(
-            'Full Body Workout',
-            {},
-          ),
-          DateTime(2024, 5, 25, 10, 0, 0, 0, 0)),
+          DateTime(2024, 6, 25, 10, 0, 0, 0, 0)),
     ],
-    
   };
   final Map<String, List<Workout>> completedWorkouts = {
-    '5/5/2024': [
+    '5/6/2024': [
       CompletedWorkout(
           Workout('Completed 1', {
             fitRepExercises[0]: [
@@ -72,7 +144,7 @@ class WorkoutsManager extends ChangeNotifier {
                   restTime: Duration(minutes: 0, seconds: 60)),
             ],
           }),
-          DateTime.utc(2024, 5, 5),
+          DateTime.utc(2024, 6, 5),
           500,
           Duration(minutes: 60)),
       CompletedWorkout(
@@ -116,13 +188,13 @@ class WorkoutsManager extends ChangeNotifier {
                   restTime: Duration(minutes: 0, seconds: 60)),
             ],
           }),
-          DateTime.utc(2024, 4, 20),
+          DateTime.utc(2024, 5, 20),
           500,
           Duration(minutes: 60)),
     ],
-    '13/5/2024': [
+    '13/6/2024': [
       CompletedWorkout(
-          Workout('Today 1', {
+          Workout('Completed 3', {
             fitRepExercises[0]: [
               ExerciseSet.repsSet(
                   reps: 10,
@@ -162,7 +234,7 @@ class WorkoutsManager extends ChangeNotifier {
                   restTime: Duration(minutes: 0, seconds: 10)),
             ],
           }),
-          DateTime.utc(2024, 5, 13, 10, 0, 0, 0, 0),
+          DateTime.utc(2024, 6, 13, 10, 0, 0, 0, 0),
           500,
           Duration(minutes: 60)),
     ],
@@ -193,9 +265,7 @@ class WorkoutsManager extends ChangeNotifier {
   }
 
   void removeWorkout(Workout workout) {
-    print(plannedWorkouts.length);
     if (workout is PlannedWorkout) {
-      print('removing');
       plannedWorkouts[formatDate(workout.date)]?.remove(workout);
       notifyListeners();
       return;
@@ -207,7 +277,6 @@ class WorkoutsManager extends ChangeNotifier {
       _workouts.remove(workout);
       notifyListeners();
     }
-    print(plannedWorkouts.length);
   }
 
   void updateWorkout(Workout workout) {
@@ -298,7 +367,7 @@ class WorkoutsManager extends ChangeNotifier {
         .toList();
 
     final allDates = [...plannedDates, ...completedDates];
-    return allDates.toSet().toList(); 
+    return allDates.toSet().toList();
   }
 
   // Future<void> saveWorkouts() async {

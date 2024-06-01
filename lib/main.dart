@@ -1,7 +1,7 @@
 import 'package:fit_rep/providers/settings_manager.dart';
 import 'package:fit_rep/providers/statistics_manager.dart';
 import 'package:fit_rep/providers/workouts_manager.dart';
-import 'package:fit_rep/screens/home_screen.dart';
+import 'package:fit_rep/screens/statistics_screen.dart';
 import 'package:fit_rep/screens/my_gym_screen.dart';
 import 'package:fit_rep/screens/calendar_screen.dart';
 import 'package:fit_rep/screens/settings_screen.dart';
@@ -35,7 +35,7 @@ class _FitRepAppState extends State<FitRepApp> {
   int _selectedIndex = 0;
   final List<Widget> destinations = <Widget>[
     MyGymScreen(),
-    HomeScreen(),
+    StatisticsScreen(),
     CalendarScreen(),
     SettingsScreen(),
   ];
@@ -80,10 +80,10 @@ class _FitRepAppState extends State<FitRepApp> {
                   ),
                   NavigationDestination(
                     icon: _selectedIndex == 1
-                        ? Icon(Icons.home,
+                        ? Icon(Icons.bar_chart,
                             color: settingsManger.theme.primaryColor)
-                        : Icon(Icons.home),
-                    label: 'Home',
+                        : Icon(Icons.bar_chart),
+                    label: 'Statistics',
                   ),
                   NavigationDestination(
                     icon: _selectedIndex == 2

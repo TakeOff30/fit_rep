@@ -58,6 +58,7 @@ class _ExercisesSelectionState extends State<ExercisesSelection> {
     var settingsProvider = Provider.of<SettingsManager>(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'Exercises List',
           style: TextStyle(

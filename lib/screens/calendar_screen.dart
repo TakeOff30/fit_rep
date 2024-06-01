@@ -27,10 +27,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
         builder: (context, workoutsManager, child) {
       _selectedDayWorkouts = workoutsManager.getWorkoutsByDay(_selectedDay);
       List<String> workoutDates = workoutsManager.getWorkoutDates();
-      print(workoutDates);
 
       return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Calendar',
               style: TextStyle(
                 fontSize: 24.0,

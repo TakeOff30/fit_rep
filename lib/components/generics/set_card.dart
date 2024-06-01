@@ -157,7 +157,6 @@ class SetCardState extends State<SetCard> {
   }
 
   void showPickerDuration(BuildContext context, Function onConfirm) {
-    print('showed');
     Duration duration = Duration(minutes: 0, seconds: 0);
 
     showDialog(
